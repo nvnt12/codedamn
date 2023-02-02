@@ -14,7 +14,7 @@ export default function NavBar() {
 					<input
 						type="text"
 						placeholder="Search"
-						className="w-96 mr-6 focus:outline-none border-2 rounded-md p-2 pt-1 pb-1 block pl-10 border-gray-100 font-normal text-lg"
+						className="w-96 mr-6 focus:outline-none border-2 rounded-lg p-2 pt-1 pb-1 block pl-10 border-gray-50 font-normal text-lg"
 					/>
 				</div>
 				<div className="flex items-center ml-5 mr-5">
