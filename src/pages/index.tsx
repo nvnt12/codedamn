@@ -67,7 +67,10 @@ export default function Home() {
 							<div className="pt-10 pb-10">
 								<ul className="flex flex-wrap">
 									{skills.map(skill => (
-										<li className="bg-gray-100 pr-4 pl-4 pt-1 pb-1 rounded-md text-md font-semibold mr-3 mb-4">
+										<li
+											key={skill}
+											className="bg-gray-100 pr-4 pl-4 pt-1 pb-1 rounded-md text-md font-semibold mr-3 mb-4"
+										>
 											{skill}
 										</li>
 									))}
