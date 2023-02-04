@@ -14,10 +14,10 @@ export default function Home() {
 		'CSS 3',
 		'Javascript',
 		'React',
-		'Ui design',
+		'Java',
 		'Javascript',
 		'React',
-		'Ui design'
+		'Java'
 	])
 	const [location, setLocation] = useState<string>('Mumbai, India')
 	return (
