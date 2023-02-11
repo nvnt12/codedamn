@@ -4,22 +4,36 @@ import NavBar from '../../components/NavBar'
 import { HiOutlineBookmark } from 'react-icons/hi'
 import { useState } from 'react'
 import Link from 'next/link'
+import { GetStaticProps } from 'next'
+import mongoose from 'mongoose'
+import Users from '../../model/Users'
 
-export default function Home() {
-	const [name, setName] = useState<string>('Navneet Chadha')
-	const [profession, setProfession] = useState<string>('Student')
-	const [education, setEducation] = useState<string>(`University of Mumbai'23"`)
-	const [skills, setSkills] = useState([
-		'Html 5',
-		'CSS 3',
-		'Javascript',
-		'React',
-		'Java',
-		'Javascript',
-		'React',
-		'Java'
-	])
-	const [location, setLocation] = useState<string>('Mumbai, India')
+export const getStaticProps: GetStaticProps = async context => {
+	mongoose.connect(process.env.MONGODB_URI as string)
+
+	const user = await Users.findById(process.env.USER_ID).exec()
+
+	const props = {
+		name: user?.name,
+		profession: user?.profession,
+		education: user?.education,
+		skills: user?.skills,
+		location: user?.location
+	}
+	console.log(props)
+
+	return {
+		props: props
+	}
+}
+
+export default function Home(props: any) {
+	const [name, setName] = useState<string>(props.name)
+	const [profession, setProfession] = useState<string>(props.profession)
+	const [education, setEducation] = useState<string>(props.education)
+	const [skills, setSkills] = useState(props.skills.split(','))
+	const [location, setLocation] = useState<string>(props.location)
+
 	return (
 		<>
 			<NavBar />
@@ -30,8 +44,8 @@ export default function Home() {
 							src={'/cover.jpg'}
 							alt={'Cover Image'}
 							width="1000"
-							height="40"
-							className="rounded-t-2xl"
+							height="60"
+							className="rounded-t-2xl w-full h-40"
 						/>
 					</div>
 					<div className="relative flex p-6">
@@ -66,9 +80,9 @@ export default function Home() {
 							</div>
 							<div className="pt-10 pb-10">
 								<ul className="flex flex-wrap">
-									{skills.map(skill => (
+									{skills.map((skill: string) => (
 										<li
-											key={skill}
+											key={Math.random()}
 											className="bg-gray-100 pr-4 pl-4 pt-1 pb-1 rounded-md text-md font-semibold mr-3 mb-4"
 										>
 											{skill}

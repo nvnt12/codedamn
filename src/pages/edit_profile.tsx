@@ -1,16 +1,92 @@
 import Image from 'next/image'
 import NavBar from '../../components/NavBar'
-import { AiOutlineChrome } from 'react-icons/ai'
 import SideNav from '../../components/SideNav'
+import { useState } from 'react'
+import { GetStaticProps } from 'next'
+import mongoose from 'mongoose'
+import Users from '../../model/Users'
 
-export default function Edit_Profile() {
+export const getStaticProps: GetStaticProps = async context => {
+	mongoose.connect(process.env.MONGODB_URI as string)
+
+	const user = await Users.findById(process.env.USER_ID).exec()
+
+	const props = {
+		id: user.id,
+		name: user.name,
+		about: user.about,
+		profession: user.profession,
+		dob: user.dob,
+		gender: user.gender,
+		allowFollowers: user.allowFollowers,
+		allowXp: user.allowXp,
+		allowBadge: user.allowBadge
+	}
+	console.log(props)
+
+	return {
+		props: props
+	}
+}
+
+export default function Edit_Profile(props: any) {
+	const id = props.id as string
+	const [name, setName] = useState<string>(props.name)
+	const [about, setAbout] = useState<string>(props.about)
+	const [profession, setProfession] = useState<string>(props.profession)
+	const [dob, setDob] = useState<string>(props.dob)
+	const [gender, setGender] = useState<string>(props.gender)
+	const [allowFollowers, setAllowFollowers] = useState<boolean>(props.allowFollowers)
+	const [allowXp, setAllowXp] = useState<boolean>(props.allowXp)
+	const [allowBadge, setAllowBadge] = useState<boolean>(props.allowBadge)
+	const [userInfo, setUserInfo] = useState({
+		id,
+		name,
+		about,
+		profession,
+		dob,
+		gender,
+		allowFollowers,
+		allowXp,
+		allowBadge
+	})
+
+	async function handleInfo() {
+		setUserInfo({
+			id,
+			name,
+			about,
+			profession,
+			dob,
+			gender,
+			allowFollowers,
+			allowXp,
+			allowBadge
+		})
+		const res = await fetch('/api/updateUser', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify(userInfo)
+		})
+
+		const resText = await res.text()
+	}
+
 	return (
 		<>
 			<NavBar />
 			<div className="flex p-12 justify-between">
+				<p>{}</p>
 				<SideNav />
 				<div className="w-9/12 px-20">
-					<form action="" className="">
+					<form
+						onSubmit={e => {
+							e.preventDefault()
+							handleInfo()
+						}}
+					>
 						<div className="flex items-center mb-8">
 							<Image
 								src="/pfp.jpeg"
@@ -33,6 +109,9 @@ export default function Edit_Profile() {
 								</label>
 								<input
 									type="text"
+									id="name"
+									value={name}
+									onChange={e => setName(e.target.value)}
 									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
 								/>
 								<p className="text-md font-normal text-gray-500">
@@ -40,40 +119,50 @@ export default function Edit_Profile() {
 								</p>
 							</div>
 							<div className="mb-6 flex flex-col">
-								<label htmlFor="name" className="text-md font-medium mb-1">
+								<label htmlFor="about" className="text-md font-medium mb-1">
 									About
 								</label>
 								<textarea
-									name=""
-									id=""
+									name="about"
+									id="about"
+									value={about}
+									onChange={e => setAbout(e.target.value)}
 									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
 								></textarea>
 							</div>
 							<div className="mb-6 flex flex-col">
-								<label htmlFor="name" className="text-md font-medium mb-1">
+								<label htmlFor="profession" className="text-md font-medium mb-1">
 									Profession
 								</label>
 								<input
 									type="text"
+									id="profession"
+									value={profession}
+									onChange={e => setProfession(e.target.value)}
 									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
 								/>
 							</div>
 							<div className="mb-6 flex flex-col">
-								<label htmlFor="name" className="text-md font-medium mb-1">
+								<label htmlFor="dob" className="text-md font-medium mb-1">
 									Date of birth
 								</label>
 								<input
 									type="date"
+									id="dob"
+									value={dob}
+									onChange={e => setDob(e.target.value)}
 									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-400 uppercase  focus:outline-none"
 								/>
 							</div>
 							<div className="mb-6 flex flex-col">
-								<label htmlFor="name" className="text-md font-medium mb-1">
+								<label htmlFor="gender" className="text-md font-medium mb-1">
 									Gender
 								</label>
 								<select
 									name="gender"
 									id="gender"
+									value={gender}
+									onChange={e => setGender(e.target.value)}
 									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-400  focus:outline-none"
 								>
 									<option value="">What is your gender?</option>
@@ -92,32 +181,54 @@ export default function Edit_Profile() {
 							<div className="mb-6 flex flex-col bg-gray-100 p-6 rounded-xl">
 								<div className="flex justify-between mb-4">
 									<div>
-										<h4 className="text-lg font-bold mb-1">
+										<label
+											htmlFor="followers"
+											className="text-lg font-bold mb-1"
+										>
 											Followers and following
-										</h4>
+										</label>
 										<p>
 											Shows your followers and the users you follow on
 											codedamn
 										</p>
 									</div>
 									<div>
-										<input type="checkbox" name="Followers" id="followers" />
+										<input
+											type="checkbox"
+											name="followers"
+											id="followers"
+											checked={allowFollowers}
+											onChange={e =>
+												setAllowFollowers(allowFollowers ? false : true)
+											}
+										/>
 									</div>
 								</div>
 								<div className="flex justify-between mb-4">
 									<div>
-										<h4 className="text-lg font-bold mb-1">XP</h4>
+										<label htmlFor="xp" className="text-lg font-bold mb-1">
+											XP
+										</label>
 										<p>Shows the XP you have earned</p>
 									</div>
 									<div>
-										<input type="checkbox" name="xp" id="xp" />
+										<input
+											type="checkbox"
+											name="xp"
+											id="xp"
+											checked={allowXp}
+											onChange={e => setAllowXp(allowXp ? false : true)}
+										/>
 									</div>
 								</div>
 								<div className="flex justify-between mb-4">
 									<div>
-										<h4 className="text-lg font-bold mb-1">
+										<label
+											htmlFor="achievements"
+											className="text-lg font-bold mb-1"
+										>
 											Achievement badges
-										</h4>
+										</label>
 										<p>Shows your relative percentile and proficiency</p>
 									</div>
 									<div>
@@ -125,6 +236,10 @@ export default function Edit_Profile() {
 											type="checkbox"
 											name="achievements"
 											id="achievements"
+											checked={allowBadge}
+											onChange={() =>
+												setAllowBadge(allowBadge ? false : true)
+											}
 										/>
 									</div>
 								</div>
@@ -133,7 +248,10 @@ export default function Edit_Profile() {
 								<button className="m-2 bg-gray-100 py-2 px-5 text-gray-900 text-md rounded-lg font-medium">
 									Cancel
 								</button>
-								<button className="m-2 bg-indigo-600 py-2 px-5 text-white text-md rounded-lg font-medium">
+								<button
+									className="m-2 bg-indigo-600 py-2 px-5 text-white text-md rounded-lg font-medium"
+									type="submit"
+								>
 									Save changes
 								</button>
 							</div>
