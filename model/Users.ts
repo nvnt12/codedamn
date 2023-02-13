@@ -4,8 +4,9 @@ const { Schema, model } = mongoose
 
 const userSchema = new Schema({
 	name: String,
+	username: String,
 	profession: String,
-	education: String,
+	institute: String,
 	skills: String,
 	location: String,
 	about: String,
@@ -19,7 +20,8 @@ const userSchema = new Schema({
 	instagram: String,
 	facebook: String,
 	behance: String,
-	dribbble: String
+	dribbble: String,
+	education: [String]
 })
 
 export default mongoose.models?.Users || mongoose.model('Users', userSchema)

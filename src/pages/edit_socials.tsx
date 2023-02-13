@@ -4,6 +4,9 @@ import { useState } from 'react'
 import NavBar from '../../components/NavBar'
 import SideNav from '../../components/SideNav'
 import Users from '../../model/Users'
+import PrimaryButton from '../../components/PrimaryButton'
+import SecondaryButton from '../../components/SecondaryButton'
+import Input from '../../components/PrimaryInput'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
@@ -11,17 +14,17 @@ export const getStaticProps: GetStaticProps = async context => {
 	const user = await Users.findById(process.env.USER_ID).exec()
 
 	const props = {
-		github: user.github,
-		youtube: user.youtube,
-		instagram: user.instagram,
-		facebook: user.facebook,
-		behance: user.behance,
-		dribbble: user.dribbble
+		github: user?.github,
+		youtube: user?.youtube,
+		instagram: user?.instagram,
+		facebook: user?.facebook,
+		behance: user?.behance,
+		dribbble: user?.dribbble
 	}
-	console.log(props)
 
 	return {
-		props: props
+		props: props,
+		revalidate: 10
 	}
 }
 
@@ -75,89 +78,64 @@ export default function Edit_Socials(props: any) {
 						className=""
 					>
 						<div className="flex flex-col">
-							<div className="mb-6 flex flex-col">
-								<label htmlFor="github" className="text-md font-medium mb-1">
-									Github
-								</label>
-								<input
-									type="text"
-									id="github"
-									value={github}
-									onChange={e => setGithub(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
-								/>
-							</div>
-							<div className="mb-6 flex flex-col">
-								<label htmlFor="youtube" className="text-md font-medium mb-1">
-									Youtube
-								</label>
-								<input
-									type="text"
-									id="youtube"
-									value={youtube}
-									onChange={e => setYoutube(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
-								/>
-							</div>
-							<div className="mb-6 flex flex-col">
-								<label htmlFor="instragram" className="text-md font-medium mb-1">
-									Instagram
-								</label>
-								<input
-									type="text"
-									id="instagram"
-									value={instagram}
-									onChange={e => setInstagram(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
-								/>
-							</div>
-							<div className="mb-6 flex flex-col">
-								<label htmlFor="facebook" className="text-md font-medium mb-1">
-									Facebook
-								</label>
-								<input
-									type="text"
-									id="facebook"
-									value={facebook}
-									onChange={e => setFacebook(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
-								/>
-							</div>
-							<div className="mb-6 flex flex-col">
-								<label htmlFor="behance" className="text-md font-medium mb-1">
-									Behance
-								</label>
-								<input
-									type="text"
-									id="behance"
-									value={behance}
-									onChange={e => setBehance(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
-								/>
-							</div>
-							<div className="mb-6 flex flex-col">
-								<label htmlFor="dribble" className="text-md font-medium mb-1">
-									Dribbble
-								</label>
-								<input
-									type="text"
-									id="dribble"
-									value={dribbble}
-									onChange={e => setDribbble(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
-								/>
-							</div>
+							<Input
+								label="Github"
+								type="text"
+								id="github"
+								value={github}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									setGithub(e.target.value)
+								}
+							></Input>
+							<Input
+								label="Youtube"
+								type="text"
+								id="youtube"
+								value={youtube}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									setYoutube(e.target.value)
+								}
+							></Input>
+							<Input
+								label="Instagram"
+								type="text"
+								id="instagram"
+								value={instagram}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									setInstagram(e.target.value)
+								}
+							></Input>
+							<Input
+								label="Facebook"
+								type="text"
+								id="facebook"
+								value={facebook}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									setFacebook(e.target.value)
+								}
+							></Input>
+							<Input
+								label="Behance"
+								type="text"
+								id="behance"
+								value={behance}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									setBehance(e.target.value)
+								}
+							></Input>
+							<Input
+								label="Dribbble"
+								type="text"
+								id="dribble"
+								value={dribbble}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									setDribbble(e.target.value)
+								}
+							></Input>
 
 							<div className="mb-6 flex justify-end">
-								<button className="m-2 bg-gray-100 py-2 px-5 text-gray-900 text-md rounded-lg font-medium">
-									Cancel
-								</button>
-								<button
-									className="m-2 bg-indigo-600 py-2 px-5 text-white text-md rounded-lg font-medium"
-									type="submit"
-								>
-									Save changes
-								</button>
+								<SecondaryButton value="Cancel"></SecondaryButton>
+								<PrimaryButton value="Save changes" type="submit"></PrimaryButton>
 							</div>
 						</div>
 					</form>

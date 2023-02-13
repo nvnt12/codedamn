@@ -5,6 +5,10 @@ import { useState } from 'react'
 import { GetStaticProps } from 'next'
 import mongoose from 'mongoose'
 import Users from '../../model/Users'
+import PrimaryButton from '../../components/PrimaryButton'
+import SecondaryButton from '../../components/SecondaryButton'
+import Input from '../../components/PrimaryInput'
+import ToggleInput from '../../components/ToggleInput'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
@@ -12,20 +16,20 @@ export const getStaticProps: GetStaticProps = async context => {
 	const user = await Users.findById(process.env.USER_ID).exec()
 
 	const props = {
-		id: user.id,
-		name: user.name,
-		about: user.about,
-		profession: user.profession,
-		dob: user.dob,
-		gender: user.gender,
-		allowFollowers: user.allowFollowers,
-		allowXp: user.allowXp,
-		allowBadge: user.allowBadge
+		id: user?.id,
+		name: user?.name,
+		about: user?.about,
+		profession: user?.profession,
+		dob: user?.dob,
+		gender: user?.gender,
+		allowFollowers: user?.allowFollowers,
+		allowXp: user?.allowXp,
+		allowBadge: user?.allowBadge
 	}
-	console.log(props)
 
 	return {
-		props: props
+		props: props,
+		revalidate: 10
 	}
 }
 
@@ -70,8 +74,6 @@ export default function Edit_Profile(props: any) {
 			},
 			body: JSON.stringify(userInfo)
 		})
-
-		const resText = await res.text()
 	}
 
 	return (
@@ -95,29 +97,21 @@ export default function Edit_Profile(props: any) {
 								height="90"
 								className="rounded-full mr-6"
 							/>
-							<button className="m-2 bg-indigo-600 py-2 px-5 text-white text-md rounded-lg font-medium">
-								Upload new picture
-							</button>
-							<button className="m-2 bg-gray-100 py-2 px-5 text-gray-900 text-md rounded-lg font-medium">
-								Delete
-							</button>
+							<PrimaryButton type="button" value="Upload new picture"></PrimaryButton>
+							<SecondaryButton type="button" value="Delete"></SecondaryButton>
 						</div>
 						<div className="flex flex-col">
-							<div className="mb-6 flex flex-col">
-								<label htmlFor="name" className="text-md font-medium mb-1">
-									Display name
-								</label>
-								<input
-									type="text"
-									id="name"
-									value={name}
-									onChange={e => setName(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
-								/>
-								<p className="text-md font-normal text-gray-500">
-									Name entered above will be used for all issued certificates
-								</p>
-							</div>
+							<Input
+								label="Display name"
+								type="text"
+								id="name"
+								value={name}
+								info="Name entered above will be used for all issued certificates"
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+									setName(e.target.value)
+								}}
+							/>
+
 							<div className="mb-6 flex flex-col">
 								<label htmlFor="about" className="text-md font-medium mb-1">
 									About
@@ -127,33 +121,28 @@ export default function Edit_Profile(props: any) {
 									id="about"
 									value={about}
 									onChange={e => setAbout(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
+									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-indigo-600"
 								></textarea>
 							</div>
-							<div className="mb-6 flex flex-col">
-								<label htmlFor="profession" className="text-md font-medium mb-1">
-									Profession
-								</label>
-								<input
-									type="text"
-									id="profession"
-									value={profession}
-									onChange={e => setProfession(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-none"
-								/>
-							</div>
-							<div className="mb-6 flex flex-col">
-								<label htmlFor="dob" className="text-md font-medium mb-1">
-									Date of birth
-								</label>
-								<input
-									type="date"
-									id="dob"
-									value={dob}
-									onChange={e => setDob(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-400 uppercase  focus:outline-none"
-								/>
-							</div>
+							<Input
+								label="Profession"
+								type="text"
+								id="profession"
+								value={profession}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+									setProfession(e.target.value)
+								}}
+							></Input>
+							<Input
+								label="Date of birth"
+								type="date"
+								id="dob"
+								value={dob}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+									setDob(e.target.value)
+								}}
+							></Input>
+
 							<div className="mb-6 flex flex-col">
 								<label htmlFor="gender" className="text-md font-medium mb-1">
 									Gender
@@ -163,7 +152,7 @@ export default function Edit_Profile(props: any) {
 									id="gender"
 									value={gender}
 									onChange={e => setGender(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-400  focus:outline-none"
+									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-400  focus:outline-indigo-600"
 								>
 									<option value="">What is your gender?</option>
 									<option value="female">Female</option>
@@ -179,81 +168,44 @@ export default function Edit_Profile(props: any) {
 								</p>
 							</div>
 							<div className="mb-6 flex flex-col bg-gray-100 p-6 rounded-xl">
-								<div className="flex justify-between mb-4">
-									<div>
-										<label
-											htmlFor="followers"
-											className="text-lg font-bold mb-1"
-										>
-											Followers and following
-										</label>
-										<p>
-											Shows your followers and the users you follow on
-											codedamn
-										</p>
-									</div>
-									<div>
-										<input
-											type="checkbox"
-											name="followers"
-											id="followers"
-											checked={allowFollowers}
-											onChange={e =>
-												setAllowFollowers(allowFollowers ? false : true)
-											}
-										/>
-									</div>
-								</div>
-								<div className="flex justify-between mb-4">
-									<div>
-										<label htmlFor="xp" className="text-lg font-bold mb-1">
-											XP
-										</label>
-										<p>Shows the XP you have earned</p>
-									</div>
-									<div>
-										<input
-											type="checkbox"
-											name="xp"
-											id="xp"
-											checked={allowXp}
-											onChange={e => setAllowXp(allowXp ? false : true)}
-										/>
-									</div>
-								</div>
-								<div className="flex justify-between mb-4">
-									<div>
-										<label
-											htmlFor="achievements"
-											className="text-lg font-bold mb-1"
-										>
-											Achievement badges
-										</label>
-										<p>Shows your relative percentile and proficiency</p>
-									</div>
-									<div>
-										<input
-											type="checkbox"
-											name="achievements"
-											id="achievements"
-											checked={allowBadge}
-											onChange={() =>
-												setAllowBadge(allowBadge ? false : true)
-											}
-										/>
-									</div>
-								</div>
+								<ToggleInput
+									label="Followers and following"
+									info="Shows your followers and the users you follow on
+									codedamn"
+									type="checkbox"
+									name="followers"
+									id="followers"
+									checked={allowFollowers}
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+										setAllowFollowers(allowFollowers ? false : true)
+									}
+								></ToggleInput>
+								<ToggleInput
+									label="XP"
+									info="Shows the XP you have earned"
+									type="checkbox"
+									name="xp"
+									id="xp"
+									checked={allowXp}
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+										setAllowXp(allowXp ? false : true)
+									}
+								></ToggleInput>
+								<ToggleInput
+									label="Achievement badges"
+									info="Shows your relative percentile and proficiency"
+									type="checkbox"
+									name="achievements"
+									id="achievements"
+									checked={allowBadge}
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+										setAllowBadge(allowBadge ? false : true)
+									}
+								></ToggleInput>
 							</div>
 							<div className="mb-6 flex justify-end">
-								<button className="m-2 bg-gray-100 py-2 px-5 text-gray-900 text-md rounded-lg font-medium">
-									Cancel
-								</button>
-								<button
-									className="m-2 bg-indigo-600 py-2 px-5 text-white text-md rounded-lg font-medium"
-									type="submit"
-								>
-									Save changes
-								</button>
+								<SecondaryButton value="Cancel"></SecondaryButton>
+								<PrimaryButton value="Save changes" type="submit"></PrimaryButton>
 							</div>
 						</div>
 					</form>
