@@ -1,19 +1,19 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import NavBar from '../../components/NavBar'
+import NavBar from '../components/NavBar'
 import { HiOutlineBookmark } from 'react-icons/hi'
 import Link from 'next/link'
 import { GetStaticProps } from 'next'
 import mongoose from 'mongoose'
-import Users from '../../model/Users'
+import Users from '../model/Users'
 import { TbEdit } from 'react-icons/tb'
-import PrimaryButton from '../../components/PrimaryButton'
+import PrimaryButton from '../components/PrimaryButton'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
 
-	const user = await Users.findById(process.env.USER_ID).exec()
-
+	const user = await Users.findById(process.env.USER_ID).lean()
+	console.log(user)
 	const props = {
 		name: user?.name,
 		profession: user?.profession,
@@ -39,7 +39,7 @@ export default function Home(props: any) {
 	const name: string = props.name
 	const profession: string = props.profession
 	const institute: string = props.institute
-	const skills: any = props.skills.split(',')
+	const skills: any = props.skills
 	const location: string = props.location
 	const github: string = props.github
 	const youtube: string = props.youtube
@@ -105,9 +105,9 @@ export default function Home(props: any) {
 							</div>
 							<div className="pt-10 pb-10">
 								<ul className="flex flex-wrap">
-									{skills.map((skill: string) => (
+									{skills.map((skill: string, index: number) => (
 										<li
-											key={Math.random()}
+											key={index}
 											className="bg-gray-100 pr-4 pl-4 pt-1 pb-1 rounded-md text-md font-semibold mr-3 mb-4"
 										>
 											{skill}

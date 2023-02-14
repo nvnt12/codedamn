@@ -38,7 +38,7 @@ export default function SkillModal(props: any) {
 											<select
 												name="rate"
 												id="rate"
-												className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-400  focus:outline-indigo-600"
+												className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-900  focus:outline-indigo-600"
 											>
 												<option value="beginner">Beginner</option>
 												<option value="intermediate">Intermediate</option>

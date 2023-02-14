@@ -1,9 +1,34 @@
-import { useState } from 'react'
-import NavBar from '../../components/NavBar'
-import SideNav from '../../components/SideNav'
+import NavBar from '../components/NavBar'
+import SideNav from '../components/SideNav'
 import { BiPencil, BiTrashAlt } from 'react-icons/bi'
+import PrimaryButton from '../components/PrimaryButton'
+import SecondaryButton from '../components/SecondaryButton'
+import EducationModal from '../components/EducationModal'
+import ExperienceModal from '../components/ExperienceModal'
+import SkillModal from '../components/SkillModal'
+import { GetStaticProps } from 'next'
+import Users from '../model/Users'
+import mongoose from 'mongoose'
 
-export default function Edit_Resume() {
+export const getStaticProps: GetStaticProps = async context => {
+	mongoose.connect(process.env.MONGODB_URI as string)
+
+	const user = await Users.findById(process.env.USER_ID).lean()
+
+	const props = {
+		skills: user?.skills,
+		interests: user?.interests
+	}
+
+	return {
+		props: props,
+		revalidate: 10
+	}
+}
+export default function Edit_Resume(props: any) {
+	const skills = props.skills
+	const interests = props.interests
+
 	return (
 		<>
 			<NavBar />
@@ -12,72 +37,30 @@ export default function Edit_Resume() {
 				<div className="w-9/12 px-20">
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6">
-							<h1 className="font-semibold text-2xl">Education</h1>
-							<button className="m-2 bg-indigo-600 py-1.5 px-3 text-white text-sm rounded-lg font-semibold">
-								Add Education
-							</button>
+							<h1 className="font-semibold text-xl">Education</h1>
+							<EducationModal />
 						</div>
 						<div className="bg-gray-50 p-5 rounded-lg flex  flex-col justify-between">
 							<div className="flex justify-between mb-6">
 								<div>
-									<h2 className="text-lg text-gray-900 font-semibold">
-										Bachelor of Computer
+									<h2 className="text-lg text-gray-700 font-semibold">
+										Bachelor of Science CS
 									</h2>
 									<h3 className="text-md text-gray-500 font-normal">
 										Mulund College of Commerce
 									</h3>
 									<p className=" text-gray-500 text-sm font-normal">
-										2020<span>-</span>2023
+										2020
+										<span>-</span>
+										2023
 									</p>
 								</div>
 								<div>
 									<button>
-										<BiPencil className="h-5 w-5 fill-gray-500 mr-4" />
+										<BiPencil className="h-6 w-6 fill-gray-500 mr-4" />
 									</button>
 									<button>
-										<BiTrashAlt className="h-5 w-5 fill-gray-500" />
-									</button>
-								</div>
-							</div>
-							<div className="flex justify-between mb-6">
-								<div>
-									<h2 className="text-lg text-gray-900 font-semibold">
-										Bachelor of Computer
-									</h2>
-									<h3 className="text-md text-gray-500 font-normal">
-										Mulund College of Commerce
-									</h3>
-									<p className=" text-gray-500 text-sm font-normal">
-										2020<span>-</span>2023
-									</p>
-								</div>
-								<div>
-									<button>
-										<BiPencil className="h-5 w-5 fill-gray-500 mr-4" />
-									</button>
-									<button>
-										<BiTrashAlt className="h-5 w-5 fill-gray-500" />
-									</button>
-								</div>
-							</div>
-							<div className="flex justify-between mb-6">
-								<div>
-									<h2 className="text-lg text-gray-900 font-semibold">
-										Bachelor of Computer
-									</h2>
-									<h3 className="text-md text-gray-500 font-normal">
-										Mulund College of Commerce
-									</h3>
-									<p className=" text-gray-500 text-sm font-normal">
-										2020<span>-</span>2023
-									</p>
-								</div>
-								<div>
-									<button>
-										<BiPencil className="h-5 w-5 fill-gray-500 mr-4" />
-									</button>
-									<button>
-										<BiTrashAlt className="h-5 w-5 fill-gray-500" />
+										<BiTrashAlt className="h-6 w-6 fill-gray-500" />
 									</button>
 								</div>
 							</div>
@@ -85,15 +68,13 @@ export default function Edit_Resume() {
 					</div>
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6">
-							<h1 className="font-semibold text-2xl">Work Experience</h1>
-							<button className="m-2 bg-indigo-600 py-1.5 px-3 text-white text-sm rounded-lg font-semibold">
-								Add Experience
-							</button>
+							<h1 className="font-semibold text-xl">Work Experience</h1>
+							<ExperienceModal />
 						</div>
 						<div className="bg-gray-50 p-5 rounded-lg flex  flex-col justify-between">
 							<div className="flex justify-between mb-6">
 								<div>
-									<h2 className="text-lg text-gray-900 font-semibold">
+									<h2 className="text-lg text-gray-700 font-semibold">
 										Jr. Frontend Developer at Tcs
 									</h2>
 									<h3 className="text-md text-gray-500 font-normal">Mumbai</h3>
@@ -103,29 +84,10 @@ export default function Edit_Resume() {
 								</div>
 								<div>
 									<button>
-										<BiPencil className="h-5 w-5 fill-gray-500 mr-4" />
+										<BiPencil className="h-6 w-6 fill-gray-500 mr-4" />
 									</button>
 									<button>
-										<BiTrashAlt className="h-5 w-5 fill-gray-500" />
-									</button>
-								</div>
-							</div>
-							<div className="flex justify-between mb-6">
-								<div>
-									<h2 className="text-lg text-gray-900 font-semibold">
-										Jr. Frontend Developer at Meta
-									</h2>
-									<h3 className="text-md text-gray-500 font-normal">Delhi</h3>
-									<p className=" text-gray-500 text-sm font-normal">
-										2020<span>-</span>2023
-									</p>
-								</div>
-								<div>
-									<button>
-										<BiPencil className="h-5 w-5 fill-gray-500 mr-4" />
-									</button>
-									<button>
-										<BiTrashAlt className="h-5 w-5 fill-gray-500" />
+										<BiTrashAlt className="h-6 w-6 fill-gray-500" />
 									</button>
 								</div>
 							</div>
@@ -133,88 +95,61 @@ export default function Edit_Resume() {
 					</div>
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6">
-							<h1 className="font-semibold text-2xl">Skills</h1>
-							<button className="m-2 bg-indigo-600 py-1.5 px-3 text-white text-sm rounded-lg font-semibold">
-								Add Skill
-							</button>
+							<h1 className="font-semibold text-xl">Skills</h1>
+							<SkillModal skills="html,css,js" />
 						</div>
 						<div className="bg-gray-50 p-5 rounded-lg flex-col">
 							<div className="flex justify-between ">
-								<div>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										HTML 5
-									</h2>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										CSS 3
-									</h2>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										Javascript
-									</h2>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										React
-									</h2>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										Python
-									</h2>
-								</div>
-								<div>
-									<button>
-										<BiPencil className="h-5 w-5 fill-gray-500 mr-4" />
-									</button>
-									<button>
-										<BiTrashAlt className="h-5 w-5 fill-gray-500" />
-									</button>
+								<div className="pt-1 pb-1 grid grid-cols-2 w-full gap-x-14">
+									{skills.map((skill: string) => (
+										<div
+											key={skill}
+											className="flex shrink mb-4 justify-between items-center"
+										>
+											<div className="pr-4 pl-4 pt-1 pb-1 rounded-md mr-3 ">
+												<p className="text-md text-gray-700 font-semibold">
+													{skill}
+												</p>
+												<p className="text-sm text-gray-500">Beginner</p>
+											</div>
+											<div className="mt-1 mr-4">
+												<button>
+													<BiPencil className="h-6 w-6 fill-gray-500 mr-4" />
+												</button>
+												<button>
+													<BiTrashAlt className="h-6 w-6 fill-gray-500" />
+												</button>
+											</div>
+										</div>
+									))}
 								</div>
 							</div>
 						</div>
 					</div>
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6">
-							<h1 className="font-semibold text-2xl">Interests</h1>
-							<button className="m-2 bg-indigo-600 py-1.5 px-3 text-white text-sm rounded-lg font-semibold">
-								Add Interest
-							</button>
+							<h1 className="font-semibold text-xl">Interests</h1>
 						</div>
 						<div className="bg-gray-50 p-5 rounded-lg flex-col">
-							<div className="flex justify-between ">
-								<div>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										Semantics
-									</h2>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										TED talks
-									</h2>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										Udemy
-									</h2>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										Behavioural
-									</h2>
-									<h2 className="text-md mb-1 text-gray-900 font-semibold">
-										Economic
-									</h2>
-								</div>
-								<div>
-									<button>
-										<BiPencil className="h-5 w-5 fill-gray-500 mr-4" />
-									</button>
-									<button>
-										<BiTrashAlt className="h-5 w-5 fill-gray-500" />
-									</button>
-								</div>
+							<div className="flex">
+								{interests.map((interest: string) => (
+									<div
+										className="flex justify-between items-center"
+										key={interest}
+									>
+										<div className="bg-gray-200 px-3 py-1 mr-4 rounded-lg ">
+											<p className="text-md text-gray-700 font-semibold">
+												{interest}
+											</p>
+										</div>
+									</div>
+								))}
 							</div>
 						</div>
 					</div>
 					<div className="mb-6 flex justify-end">
-						<button className="m-2 bg-gray-100 py-2 px-5 text-gray-900 text-md rounded-lg font-medium">
-							Cancel
-						</button>
-						<button
-							className="m-2 bg-indigo-600 py-2 px-5 text-white text-md rounded-lg font-medium"
-							type="submit"
-						>
-							Save changes
-						</button>
+						<SecondaryButton value="Cancel"></SecondaryButton>
+						<PrimaryButton value="Save changes" type="submit"></PrimaryButton>
 					</div>
 				</div>
 			</div>

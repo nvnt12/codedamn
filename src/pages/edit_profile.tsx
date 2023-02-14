@@ -1,19 +1,19 @@
 import Image from 'next/image'
-import NavBar from '../../components/NavBar'
-import SideNav from '../../components/SideNav'
+import NavBar from '../components/NavBar'
+import SideNav from '../components/SideNav'
 import { useState } from 'react'
 import { GetStaticProps } from 'next'
 import mongoose from 'mongoose'
-import Users from '../../model/Users'
-import PrimaryButton from '../../components/PrimaryButton'
-import SecondaryButton from '../../components/SecondaryButton'
-import Input from '../../components/PrimaryInput'
-import ToggleInput from '../../components/ToggleInput'
+import Users from '../model/Users'
+import PrimaryButton from '../components/PrimaryButton'
+import SecondaryButton from '../components/SecondaryButton'
+import Input from '../components/PrimaryInput'
+import ToggleInput from '../components/ToggleInput'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
 
-	const user = await Users.findById(process.env.USER_ID).exec()
+	const user = await Users.findById(process.env.USER_ID).lean()
 
 	const props = {
 		id: user?.id,
@@ -152,7 +152,7 @@ export default function Edit_Profile(props: any) {
 									id="gender"
 									value={gender}
 									onChange={e => setGender(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-400  focus:outline-indigo-600"
+									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-900  focus:outline-indigo-600"
 								>
 									<option value="">What is your gender?</option>
 									<option value="female">Female</option>

@@ -1,8 +1,8 @@
-import NavBar from '../../components/NavBar'
-import SideNav from '../../components/SideNav'
-import PrimaryButton from '../../components/PrimaryButton'
-import SecondaryButton from '../../components/SecondaryButton'
-import Card from '../../components/Card'
+import NavBar from '../components/NavBar'
+import SideNav from '../components/SideNav'
+import PrimaryButton from '../components/PrimaryButton'
+import SecondaryButton from '../components/SecondaryButton'
+import Card from '../components/Card'
 
 export default function Edit_Porfolio(props: any) {
 	return (

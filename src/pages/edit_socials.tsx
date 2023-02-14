@@ -1,17 +1,17 @@
 import mongoose from 'mongoose'
 import { GetStaticProps } from 'next'
 import { useState } from 'react'
-import NavBar from '../../components/NavBar'
-import SideNav from '../../components/SideNav'
-import Users from '../../model/Users'
-import PrimaryButton from '../../components/PrimaryButton'
-import SecondaryButton from '../../components/SecondaryButton'
-import Input from '../../components/PrimaryInput'
+import NavBar from '../components/NavBar'
+import SideNav from '../components/SideNav'
+import Users from '../model/Users'
+import PrimaryButton from '../components/PrimaryButton'
+import SecondaryButton from '../components/SecondaryButton'
+import Input from '../components/PrimaryInput'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
 
-	const user = await Users.findById(process.env.USER_ID).exec()
+	const user = await Users.findById(process.env.USER_ID).lean()
 
 	const props = {
 		github: user?.github,
