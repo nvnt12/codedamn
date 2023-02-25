@@ -7,7 +7,7 @@ export default async function Database(req: NextApiRequest, res: NextApiResponse
 
 	const reqUser = req.body
 	const update = await Users.updateOne(
-		{ id: reqUser._id },
+		{ id: reqUser.id },
 		{
 			name: reqUser.name,
 			profession: reqUser.profession,

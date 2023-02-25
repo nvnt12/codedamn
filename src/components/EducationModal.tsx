@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PrimaryButton from './PrimaryButton'
 import Input from './PrimaryInput'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
 
 export default function EducationModal() {
-	const [showModal, setShowModal] = React.useState(false)
+	const [showModal, setShowModal] = useState<boolean>(false)
+
 	return (
 		<>
 			<TertiaryButton
-				className=" text-indigo-600 font-semibold text-md mr-1 mb-1  outline-none hover:outline-none"
 				type="button"
 				value="Add Education"
 				onClick={() => setShowModal(true)}
@@ -27,18 +27,42 @@ export default function EducationModal() {
 								{/*body*/}
 								<div className="relative py-6 px-6 flex-auto">
 									<form className="w-full relative flex-auto" action="">
-										<Input type="text" label="Degree" className="mb-2" />
-										<Input type="text" label="College" />
+										<Input
+											type="text"
+											label="Degree"
+											id=""
+											className=""
+											info=""
+											value=""
+											onChange={e => e.preventDefault()}
+										/>
+										<Input
+											type="text"
+											label="College"
+											id=""
+											className=""
+											info=""
+											value=""
+											onChange={e => e.preventDefault()}
+										/>
 										<div className="flex flex-wrap justify-between">
 											<Input
 												type="year"
 												label="Start"
 												className="shrink grow w-72"
+												id=""
+												info=""
+												value=""
+												onChange={e => e.preventDefault()}
 											/>
 											<Input
 												type="text"
 												label="End"
 												className="shrink grow w-72"
+												id=""
+												info=""
+												value=""
+												onChange={e => e.preventDefault()}
 											/>
 										</div>
 										<div className="flex items-center justify-end rounded-b">

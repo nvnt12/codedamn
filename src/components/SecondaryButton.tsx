@@ -1,4 +1,8 @@
-export default function SecondaryButton(props: any) {
+export default function SecondaryButton(props: {
+	type: 'submit' | 'reset' | 'button'
+	value: string
+	onClick: () => void
+}) {
 	return (
 		<button
 			type={props.type}

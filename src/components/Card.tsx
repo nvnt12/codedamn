@@ -1,15 +1,23 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
-export default function Card(props: any) {
+export default function Card(props: {
+	type: string
+	selected: string
+	src: string
+	alt: string
+	title: string
+	lang: string
+	date: string
+}) {
 	const [type, setType] = useState<string>(props.type)
-	const selected: boolean = props.selected
+	const selected: string = props.selected
 
 	if (type == 'playground') {
 		return (
 			<div
 				className={`${
-					selected
+					selected == 'true'
 						? 'flex mb-2 bg-indigo-50 p-5 rounded-lg border border-indigo-600'
 						: 'flex mb-2 bg-gray-50 p-5 rounded-lg '
 				} `}
@@ -24,10 +32,10 @@ export default function Card(props: any) {
 		)
 	} else {
 		return (
-			<div onClick={props.on}>
+			<div>
 				<div
 					className={`${
-						selected
+						selected == 'true'
 							? 'flex flex-col mb-2 bg-indigo-50 p-5 rounded-lg border border-indigo-600'
 							: 'flex flex-col mb-2 bg-gray-50 p-5 rounded-lg '
 					} `}

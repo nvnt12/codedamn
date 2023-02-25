@@ -2,14 +2,30 @@ import { SlBell, SlMagnifier } from 'react-icons/sl'
 import { BsFillLightningChargeFill } from 'react-icons/bs'
 import { FiChevronDown } from 'react-icons/fi'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 
-export default function NavBar(props: any) {
+export default function NavBar() {
 	const [isMenuOpen, setMenuOpen] = useState<boolean>(false)
+	const btnRef = useRef<HTMLButtonElement>(null)
+
+	useEffect(() => {
+		const closeMenu = (e: any) => {
+			if (btnRef.current && !btnRef.current.contains(e.target)) {
+				setMenuOpen(false)
+			}
+		}
+
+		document.body.addEventListener('click', closeMenu)
+
+		return () => document.body.removeEventListener('click', closeMenu)
+	}, [])
+
 	return (
 		<div className="flex items-center justify-between h-20">
-			<p className="font-bold text-2xl text-gray-800 items-start mr-8 ml-8 ">codedamn</p>
+			<Link href={'/'}>
+				<p className="font-bold text-2xl text-gray-800 items-start mr-8 ml-8 ">codedamn</p>
+			</Link>
 
 			<div className="flex items-center">
 				<div className="flex relative items-center w-fit">
@@ -36,6 +52,7 @@ export default function NavBar(props: any) {
 				<SlBell className="mr-5 ml-5 w-6 h-6 fill-gray-600" />
 				<div>
 					<button
+						ref={btnRef}
 						onClick={e => {
 							e.preventDefault()
 							setMenuOpen(!isMenuOpen)
@@ -55,19 +72,19 @@ export default function NavBar(props: any) {
 							<div className="p-2">
 								<Link
 									href="/"
-									className="block px-4 py-2 text-md text-gray-500 rounded-sm hover:bg-gray-50 hover:text-gray-700"
+									className="block px-4 py-2 text-md text-gray-700 hover:bg-indigo-500 hover:text-white hover:rounded-md"
 								>
 									Your profile
 								</Link>
 								<Link
 									href="/edit_profile"
-									className="block px-4 py-2 text-md text-gray-500 rounded-sm hover:bg-gray-50 hover:text-gray-700"
+									className="block px-4 py-2 text-md text-gray-700 hover:bg-indigo-500 hover:text-white hover:rounded-md"
 								>
 									Edit profile
 								</Link>
 								<Link
 									href="/"
-									className="block px-4 py-2 text-md text-gray-500 rounded-sm hover:bg-gray-50 hover:text-gray-700"
+									className="block px-4 py-2 text-md text-gray-700 hover:bg-indigo-500 hover:text-white hover:rounded-md"
 								>
 									Sign out
 								</Link>

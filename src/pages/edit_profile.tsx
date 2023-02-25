@@ -33,7 +33,17 @@ export const getStaticProps: GetStaticProps = async context => {
 	}
 }
 
-export default function Edit_Profile(props: any) {
+export default function Edit_Profile(props: {
+	id: string
+	name: string
+	about: string
+	profession: string
+	dob: string
+	gender: string
+	allowFollowers: boolean
+	allowXp: boolean
+	allowBadge: boolean
+}) {
 	const id = props.id as string
 	const [name, setName] = useState<string>(props.name)
 	const [about, setAbout] = useState<string>(props.about)
@@ -80,7 +90,6 @@ export default function Edit_Profile(props: any) {
 		<>
 			<NavBar />
 			<div className="flex p-12 justify-between">
-				<p>{}</p>
 				<SideNav />
 				<div className="w-9/12 px-20">
 					<form
@@ -97,8 +106,20 @@ export default function Edit_Profile(props: any) {
 								height="90"
 								className="rounded-full mr-6"
 							/>
-							<PrimaryButton type="button" value="Upload new picture"></PrimaryButton>
-							<SecondaryButton type="button" value="Delete"></SecondaryButton>
+							<PrimaryButton
+								type="button"
+								value="Upload new picture"
+								onClick={() => {
+									//do something
+								}}
+							></PrimaryButton>
+							<SecondaryButton
+								type="button"
+								value="Delete"
+								onClick={() => {
+									//do something
+								}}
+							></SecondaryButton>
 						</div>
 						<div className="flex flex-col">
 							<Input
@@ -106,6 +127,7 @@ export default function Edit_Profile(props: any) {
 								type="text"
 								id="name"
 								value={name}
+								className=""
 								info="Name entered above will be used for all issued certificates"
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 									setName(e.target.value)
@@ -129,6 +151,8 @@ export default function Edit_Profile(props: any) {
 								type="text"
 								id="profession"
 								value={profession}
+								info=""
+								className=""
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 									setProfession(e.target.value)
 								}}
@@ -138,6 +162,8 @@ export default function Edit_Profile(props: any) {
 								type="date"
 								id="dob"
 								value={dob}
+								info=""
+								className=""
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 									setDob(e.target.value)
 								}}
@@ -167,7 +193,7 @@ export default function Edit_Profile(props: any) {
 									page.
 								</p>
 							</div>
-							<div className="mb-6 flex flex-col bg-gray-100 p-6 rounded-xl">
+							<div className="mb-6 flex flex-col bg-gray-50 p-6 rounded-xl">
 								<ToggleInput
 									label="Followers and following"
 									info="Shows your followers and the users you follow on
@@ -204,8 +230,20 @@ export default function Edit_Profile(props: any) {
 								></ToggleInput>
 							</div>
 							<div className="mb-6 flex justify-end">
-								<SecondaryButton value="Cancel"></SecondaryButton>
-								<PrimaryButton value="Save changes" type="submit"></PrimaryButton>
+								<SecondaryButton
+									type="button"
+									value="Cancel"
+									onClick={() => {
+										//do something
+									}}
+								></SecondaryButton>
+								<PrimaryButton
+									value="Save changes"
+									type="submit"
+									onClick={() => {
+										//do something
+									}}
+								></PrimaryButton>
 							</div>
 						</div>
 					</form>

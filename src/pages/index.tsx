@@ -2,18 +2,22 @@ import Head from 'next/head'
 import Image from 'next/image'
 import NavBar from '../components/NavBar'
 import { HiOutlineBookmark } from 'react-icons/hi'
+import { BiMap } from 'react-icons/bi'
 import Link from 'next/link'
 import { GetStaticProps } from 'next'
 import mongoose from 'mongoose'
 import Users from '../model/Users'
 import { TbEdit } from 'react-icons/tb'
 import PrimaryButton from '../components/PrimaryButton'
+import Card from '../components/Card'
+import Portfolio from '../components/Porfolio'
+import Resume from '../components/Resume'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
 
 	const user = await Users.findById(process.env.USER_ID).lean()
-	console.log(user)
+
 	const props = {
 		name: user?.name,
 		profession: user?.profession,
@@ -35,7 +39,19 @@ export const getStaticProps: GetStaticProps = async context => {
 	}
 }
 
-export default function Home(props: any) {
+export default function Home(props: {
+	name: string
+	profession: string
+	location: string
+	institute: string
+	skills: string[]
+	github: string
+	youtube: string
+	instagram: string
+	facebook: string
+	behance: string
+	dribbble: string
+}) {
 	const name: string = props.name
 	const profession: string = props.profession
 	const institute: string = props.institute
@@ -59,12 +75,12 @@ export default function Home(props: any) {
 								src={'/cover.jpg'}
 								alt={'Cover Image'}
 								width="1000"
-								height="60"
+								height="80"
 								className="rounded-t-2xl w-full h-40"
 							/>
 							<div className="flex items-center absolute top-5 right-7  w-fit">
 								<button
-									className="px-2 py-1.5 rounded-lg border border-white border-opacity-50 flex text-md items-center text-white font-semibold bg-white bg-opacity-20
+									className="px-2 py-1.5 rounded-lg border border-white border-opacity-50 flex text-base items-center text-white font-semibold bg-white bg-opacity-20
 								"
 								>
 									<TbEdit className="h-6 w-6 mr-2" />
@@ -74,22 +90,22 @@ export default function Home(props: any) {
 						</div>
 					</div>
 					<div className="relative flex p-6">
-						<div className="relative -top-24">
+						<div className="relative -top-28">
 							<Image
 								src={'/pfp.jpeg'}
 								alt={'Profile picture'}
-								width="160"
-								height="160"
+								width="200"
+								height="200"
 								className="rounded-full border-2 border-white -top-6"
 							/>
 						</div>
 						<div className="pl-6 w-full">
 							<div className="flex items-center mb-2">
 								<h1 className="text-3xl font-bold mr-3">{name}</h1>
-								<p className="bg-green-400 pr-2 pl-2 rounded-md text-md font-semibold mr-3">
+								<p className="bg-lime-300 pr-2 pl-2 rounded-md text-md font-semibold mr-3">
 									Pro
 								</p>
-								<p className="bg-blue-200 pr-2 pl-2 rounded-md text-md font-semibold text-blue-800">
+								<p className="bg-sky-100 pr-2 pl-2 rounded-md text-md font-semibold text-sky-800">
 									Looking for job
 								</p>
 							</div>
@@ -100,7 +116,8 @@ export default function Home(props: any) {
 								</span>
 								<p className="text-lg text-gray-500 font-normal">{institute}</p>
 							</div>
-							<div>
+							<div className="flex items-center">
+								<BiMap className="h-5 w-5 fill-gray-400 mr-1" />
 								<p className="text-lg text-gray-400 font-normal">{location}</p>
 							</div>
 							<div className="pt-10 pb-10">
@@ -108,7 +125,7 @@ export default function Home(props: any) {
 									{skills.map((skill: string, index: number) => (
 										<li
 											key={index}
-											className="bg-gray-100 pr-4 pl-4 pt-1 pb-1 rounded-md text-md font-semibold mr-3 mb-4"
+											className="bg-gray-100 pr-4 pl-4 pt-1.5 pb-1.5 rounded-md text-md font-semibold mr-3 mb-4"
 										>
 											{skill}
 										</li>
@@ -188,7 +205,13 @@ export default function Home(props: any) {
 								</div>
 								<div className="flex">
 									<HiOutlineBookmark className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2  mr-4" />
-									<PrimaryButton value="Contact" type="button"></PrimaryButton>
+									<PrimaryButton
+										value="Contact"
+										type="button"
+										onClick={() => {
+											//contact
+										}}
+									></PrimaryButton>
 								</div>
 							</div>
 						</div>
@@ -203,6 +226,10 @@ export default function Home(props: any) {
 						Resume
 					</button>
 				</div>
+
+				{/* <Portfolio /> */}
+
+				<Resume />
 			</div>
 		</>
 	)

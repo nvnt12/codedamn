@@ -1,6 +1,12 @@
 import Image from 'next/image'
 
-export default function ProjectCard(props: any) {
+export default function ProjectCard(props: {
+	src: string
+	alt: string
+	title: string
+	lang: string
+	date: string
+}) {
 	return (
 		<div>
 			<div className="flex flex-col mb-2 bg-gray-50 p-5 rounded-lg ">

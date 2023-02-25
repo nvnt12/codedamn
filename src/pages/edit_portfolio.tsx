@@ -4,7 +4,7 @@ import PrimaryButton from '../components/PrimaryButton'
 import SecondaryButton from '../components/SecondaryButton'
 import Card from '../components/Card'
 
-export default function Edit_Porfolio(props: any) {
+export default function Edit_Porfolio() {
 	return (
 		<>
 			<NavBar />
@@ -13,7 +13,7 @@ export default function Edit_Porfolio(props: any) {
 				<div className="w-9/12 px-20">
 					<div className="mb-8 w-full">
 						<div className="flex justify-between items-center mb-6">
-							<h1 className="font-semibold text-2xl"></h1>
+							<h1 className="font-semibold text-2xl">Playgrounds</h1>
 						</div>
 						<div className="grid grid-cols-2 gap-4">
 							<Card
@@ -32,6 +32,7 @@ export default function Edit_Porfolio(props: any) {
 								title="Facebook Clone"
 								lang="HTML/CSS"
 								date="12/2/2023"
+								selected="false"
 							/>
 							<Card
 								type="playground"
@@ -49,6 +50,7 @@ export default function Edit_Porfolio(props: any) {
 								title="Facebook Clone"
 								lang="HTML/CSS"
 								date="12/2/2023"
+								selected="false"
 							/>
 						</div>
 					</div>
@@ -73,6 +75,7 @@ export default function Edit_Porfolio(props: any) {
 								title="Quiz App"
 								lang="HTML/CSS"
 								date="12/2/2023"
+								selected="false"
 							/>
 							<Card
 								type="project"
@@ -81,6 +84,7 @@ export default function Edit_Porfolio(props: any) {
 								title="Twitter Clone"
 								lang="HTML/CSS"
 								date="12/2/2023"
+								selected="false"
 							/>
 							<Card
 								type="project"
@@ -89,13 +93,26 @@ export default function Edit_Porfolio(props: any) {
 								title="Calculator"
 								lang="HTML/CSS"
 								date="12/2/2023"
+								selected="false"
 							/>
 						</div>
 					</div>
 
 					<div className="mb-6 flex justify-end">
-						<SecondaryButton value="Cancel"></SecondaryButton>
-						<PrimaryButton value="Save changes" type="submit"></PrimaryButton>
+						<SecondaryButton
+							type="button"
+							value="Cancel"
+							onClick={() => {
+								//cancel
+							}}
+						></SecondaryButton>
+						<PrimaryButton
+							value="Save changes"
+							type="submit"
+							onClick={() => {
+								//save changes
+							}}
+						></PrimaryButton>
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,8 @@
-export default function PrimaryButton(props: any) {
+export default function PrimaryButton(props: {
+	type: 'submit' | 'reset' | 'button'
+	value: string
+	onClick: () => void
+}) {
 	return (
 		<button
 			type={props.type}

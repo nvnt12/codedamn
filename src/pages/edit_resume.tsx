@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async context => {
 		revalidate: 10
 	}
 }
-export default function Edit_Resume(props: any) {
+export default function Edit_Resume(props: { skills: string[]; interests: string[] }) {
 	const skills = props.skills
 	const interests = props.interests
 
@@ -40,16 +40,16 @@ export default function Edit_Resume(props: any) {
 							<h1 className="font-semibold text-xl">Education</h1>
 							<EducationModal />
 						</div>
-						<div className="bg-gray-50 p-5 rounded-lg flex  flex-col justify-between">
+						<div className="bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 flex  flex-col justify-between">
 							<div className="flex justify-between mb-6">
 								<div>
-									<h2 className="text-lg text-gray-700 font-semibold">
+									<h2 className="text-lg text-gray-800 font-semibold">
 										Bachelor of Science CS
 									</h2>
-									<h3 className="text-md text-gray-500 font-normal">
+									<h3 className="text-md text-gray-600 font-normal">
 										Mulund College of Commerce
 									</h3>
-									<p className=" text-gray-500 text-sm font-normal">
+									<p className=" text-gray-600 text-sm font-normal">
 										2020
 										<span>-</span>
 										2023
@@ -71,14 +71,14 @@ export default function Edit_Resume(props: any) {
 							<h1 className="font-semibold text-xl">Work Experience</h1>
 							<ExperienceModal />
 						</div>
-						<div className="bg-gray-50 p-5 rounded-lg flex  flex-col justify-between">
+						<div className="bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 flex  flex-col justify-between">
 							<div className="flex justify-between mb-6">
 								<div>
-									<h2 className="text-lg text-gray-700 font-semibold">
+									<h2 className="text-lg text-gray-800 font-semibold">
 										Jr. Frontend Developer at Tcs
 									</h2>
-									<h3 className="text-md text-gray-500 font-normal">Mumbai</h3>
-									<p className=" text-gray-500 text-sm font-normal">
+									<h3 className="text-md text-gray-600 font-normal">Mumbai</h3>
+									<p className=" text-gray-600 text-sm font-normal">
 										2020<span>-</span>2023
 									</p>
 								</div>
@@ -96,9 +96,9 @@ export default function Edit_Resume(props: any) {
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6">
 							<h1 className="font-semibold text-xl">Skills</h1>
-							<SkillModal skills="html,css,js" />
+							<SkillModal />
 						</div>
-						<div className="bg-gray-50 p-5 rounded-lg flex-col">
+						<div className="bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 flex-col">
 							<div className="flex justify-between ">
 								<div className="pt-1 pb-1 grid grid-cols-2 w-full gap-x-14">
 									{skills.map((skill: string) => (
@@ -107,7 +107,7 @@ export default function Edit_Resume(props: any) {
 											className="flex shrink mb-4 justify-between items-center"
 										>
 											<div className="pr-4 pl-4 pt-1 pb-1 rounded-md mr-3 ">
-												<p className="text-md text-gray-700 font-semibold">
+												<p className="text-md text-gray-800 font-semibold">
 													{skill}
 												</p>
 												<p className="text-sm text-gray-500">Beginner</p>
@@ -130,15 +130,15 @@ export default function Edit_Resume(props: any) {
 						<div className="flex justify-between items-center mb-6">
 							<h1 className="font-semibold text-xl">Interests</h1>
 						</div>
-						<div className="bg-gray-50 p-5 rounded-lg flex-col">
+						<div className="flex-col">
 							<div className="flex">
 								{interests.map((interest: string) => (
 									<div
 										className="flex justify-between items-center"
 										key={interest}
 									>
-										<div className="bg-gray-200 px-3 py-1 mr-4 rounded-lg ">
-											<p className="text-md text-gray-700 font-semibold">
+										<div className="bg-gray-50 border-2 border-gray-100 px-3 py-1 mr-4 rounded-lg ">
+											<p className="text-md text-gray-800 font-semibold">
 												{interest}
 											</p>
 										</div>
@@ -148,8 +148,20 @@ export default function Edit_Resume(props: any) {
 						</div>
 					</div>
 					<div className="mb-6 flex justify-end">
-						<SecondaryButton value="Cancel"></SecondaryButton>
-						<PrimaryButton value="Save changes" type="submit"></PrimaryButton>
+						<SecondaryButton
+							type="button"
+							value="Cancel"
+							onClick={() => {
+								//do something
+							}}
+						></SecondaryButton>
+						<PrimaryButton
+							value="Save changes"
+							type="submit"
+							onClick={() => {
+								//do something
+							}}
+						></PrimaryButton>
 					</div>
 				</div>
 			</div>

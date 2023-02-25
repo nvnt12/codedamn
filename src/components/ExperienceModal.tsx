@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PrimaryButton from './PrimaryButton'
 import Input from './PrimaryInput'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
 
 export default function ExperienceModal() {
-	const [showModal, setShowModal] = React.useState(false)
+	const [showModal, setShowModal] = useState<boolean>(false)
 	return (
 		<>
 			<TertiaryButton
-				className=" text-indigo-600 font-semibold text-md mr-1 mb-1 outline-none hover:outline-none"
 				type="button"
 				value="Add Experience"
 				onClick={() => setShowModal(true)}
@@ -27,18 +26,50 @@ export default function ExperienceModal() {
 								{/*body*/}
 								<div className="relative py-6 px-6 flex-auto">
 									<form className="w-full relative flex-auto" action="">
-										<Input type="text" label="Profile" className="mb-2" />
-										<Input type="text" label="Organization" />
-										<Input type="text" label="Location" />
+										<Input
+											type="text"
+											label="Profile"
+											id=""
+											value=""
+											onChange={e => e.preventDefault()}
+											info=""
+											className=""
+										/>
+										<Input
+											type="text"
+											label="Organization"
+											id=""
+											value=""
+											onChange={e => e.preventDefault()}
+											info=""
+											className=""
+										/>
+										<Input
+											type="text"
+											label="Location"
+											id=""
+											value=""
+											onChange={e => e.preventDefault()}
+											info=""
+											className=""
+										/>
 										<div className="flex flex-wrap justify-between">
 											<Input
 												type="text"
 												label="Start"
+												id=""
+												value=""
+												onChange={e => e.preventDefault()}
+												info=""
 												className="shrink grow w-72"
 											/>
 											<Input
 												type="text"
 												label="End"
+												id=""
+												value=""
+												onChange={e => e.preventDefault()}
+												info=""
 												className="shrink grow w-72"
 											/>
 										</div>

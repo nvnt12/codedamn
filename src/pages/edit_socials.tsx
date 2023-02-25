@@ -28,7 +28,14 @@ export const getStaticProps: GetStaticProps = async context => {
 	}
 }
 
-export default function Edit_Socials(props: any) {
+export default function Edit_Socials(props: {
+	github: string
+	youtube: string
+	instagram: string
+	facebook: string
+	behance: string
+	dribbble: string
+}) {
 	const [github, setGithub] = useState<string>(props.github)
 	const [youtube, setYoutube] = useState<string>(props.youtube)
 	const [instagram, setInstagram] = useState<string>(props.instagram)
@@ -60,8 +67,6 @@ export default function Edit_Socials(props: any) {
 			},
 			body: JSON.stringify(links)
 		})
-
-		const resText = await res.text()
 	}
 
 	return (
@@ -81,6 +86,8 @@ export default function Edit_Socials(props: any) {
 							<Input
 								label="Github"
 								type="text"
+								info=""
+								className=""
 								id="github"
 								value={github}
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -90,6 +97,8 @@ export default function Edit_Socials(props: any) {
 							<Input
 								label="Youtube"
 								type="text"
+								info=""
+								className=""
 								id="youtube"
 								value={youtube}
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -99,6 +108,8 @@ export default function Edit_Socials(props: any) {
 							<Input
 								label="Instagram"
 								type="text"
+								info=""
+								className=""
 								id="instagram"
 								value={instagram}
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -108,6 +119,8 @@ export default function Edit_Socials(props: any) {
 							<Input
 								label="Facebook"
 								type="text"
+								info=""
+								className=""
 								id="facebook"
 								value={facebook}
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -117,6 +130,8 @@ export default function Edit_Socials(props: any) {
 							<Input
 								label="Behance"
 								type="text"
+								info=""
+								className=""
 								id="behance"
 								value={behance}
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -126,6 +141,8 @@ export default function Edit_Socials(props: any) {
 							<Input
 								label="Dribbble"
 								type="text"
+								info=""
+								className=""
 								id="dribble"
 								value={dribbble}
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -134,8 +151,20 @@ export default function Edit_Socials(props: any) {
 							></Input>
 
 							<div className="mb-6 flex justify-end">
-								<SecondaryButton value="Cancel"></SecondaryButton>
-								<PrimaryButton value="Save changes" type="submit"></PrimaryButton>
+								<SecondaryButton
+									type="button"
+									value="Cancel"
+									onClick={() => {
+										//do something
+									}}
+								></SecondaryButton>
+								<PrimaryButton
+									value="Save changes"
+									type="submit"
+									onClick={() => {
+										//do something
+									}}
+								></PrimaryButton>
 							</div>
 						</div>
 					</form>

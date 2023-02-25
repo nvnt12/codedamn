@@ -1,4 +1,12 @@
-export default function Input(props: any) {
+export default function Input(props: {
+	label: string
+	type: string
+	id: string
+	value: string
+	info: string
+	className: string
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}) {
 	return (
 		<div className="mb-3 flex flex-col">
 			<label htmlFor="name" className="text-md font-medium mb-1">

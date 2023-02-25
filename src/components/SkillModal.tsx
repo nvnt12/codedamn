@@ -1,15 +1,42 @@
 import React from 'react'
 import PrimaryButton from './PrimaryButton'
-import Input from './PrimaryInput'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
+import Dropdown from './Dropdown'
 
-export default function SkillModal(props: any) {
+const techStack: {
+	id: number
+	name: string
+}[] = [
+	{ id: 1, name: 'HTML 5' },
+	{ id: 2, name: 'CSS 3' },
+	{ id: 3, name: 'Javascript' },
+	{ id: 4, name: 'React' },
+	{ id: 5, name: 'Next.Js' },
+	{ id: 6, name: 'Node.Js' },
+	{ id: 7, name: 'Git' },
+	{ id: 8, name: 'PHP' },
+	{ id: 9, name: 'Vue' },
+	{ id: 10, name: 'Angular' },
+	{ id: 11, name: 'MongoDB' },
+	{ id: 12, name: 'MySql' },
+	{ id: 13, name: 'Solidity' }
+]
+
+const rate: {
+	id: number
+	name: string
+}[] = [
+	{ id: 1, name: 'Beginner' },
+	{ id: 2, name: 'Intermediate' },
+	{ id: 3, name: 'Advance' }
+]
+
+export default function SkillModal() {
 	const [showModal, setShowModal] = React.useState(false)
 	return (
 		<>
 			<TertiaryButton
-				className=" text-indigo-600 font-semibold text-md mr-1 mb-1 outline-none hover:outline-none"
 				type="button"
 				value="Add Skill"
 				onClick={() => setShowModal(true)}
@@ -27,24 +54,11 @@ export default function SkillModal(props: any) {
 								{/*body*/}
 								<div className="relative py-6 px-6 flex-auto">
 									<form className="w-full relative flex-auto" action="">
-										<Input type="text" label="Skill" className="mb-2" />
-										<div className="mb-6 flex flex-col">
-											<label
-												htmlFor="rate"
-												className="text-md font-medium mb-1"
-											>
-												How would you rate yourself on this skill?
-											</label>
-											<select
-												name="rate"
-												id="rate"
-												className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-900  focus:outline-indigo-600"
-											>
-												<option value="beginner">Beginner</option>
-												<option value="intermediate">Intermediate</option>
-												<option value="advanced">Advanced</option>
-											</select>
-										</div>
+										<Dropdown label="Skill" items={techStack} />
+										<Dropdown
+											label="How would you rate yourself on this?"
+											items={rate}
+										/>
 										<div className="flex items-center justify-end rounded-b">
 											<SecondaryButton
 												type="button"

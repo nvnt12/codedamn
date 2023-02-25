@@ -1,7 +1,15 @@
 import { useState } from 'react'
 
-export default function Toggle(props: any) {
-	const [enabled, setEnabled] = useState(props.checked)
+export default function Toggle(props: {
+	label: string
+	info: string
+	name: string
+	type: string
+	id: string
+	checked: boolean
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}) {
+	const [enabled, setEnabled] = useState<boolean>(props.checked)
 
 	return (
 		<div className="relative flex items-center justify-between mb-5">
@@ -35,43 +43,3 @@ export default function Toggle(props: any) {
 		</div>
 	)
 }
-
-// export default function ToggleInput(props: any) {
-// 	const [enabled, setEnabled] = useState<boolean>(props.checked)
-// 	const toggleClass = ' transform translate-x-5'
-// 	return (
-// 		<div className="flex justify-between mb-4  ">
-// 			<div>
-// 				<label htmlFor="achievements" className="text-lg font-bold mb-1">
-// 					{props.label}
-// 				</label>
-// 				<p>{props.info}</p>
-// 			</div>
-// 			<div className="relative inline-flex items-center cursor-pointer">
-// 				<input
-// 					type={props.type}
-// 					name={props.name}
-// 					id={props.id}
-// 					checked={props.checked}
-// 					onChange={props.onChange}
-// 				/>
-// 				<div
-// 					className="md:w-14 md:h-7 w-12 h-6 flex items-center bg-gray-400 rounded-full p-1 cursor-pointer"
-// 					onClick={() => {
-// 						if (enabled == true) {
-// 							setEnabled(false)
-// 						} else {
-// 							setEnabled(true)
-// 						}
-// 					}}
-// 				>
-// 					<div
-// 						className={`bg-black md:w-6 md:h-6 h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out${
-// 							!enabled ? null : toggleClass
-// 						}`}
-// 					></div>
-// 				</div>
-// 			</div>
-// 		</div>
-// 	)
-// }
