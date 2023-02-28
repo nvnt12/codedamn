@@ -9,6 +9,7 @@ import PrimaryButton from '../components/PrimaryButton'
 import SecondaryButton from '../components/SecondaryButton'
 import Input from '../components/PrimaryInput'
 import ToggleInput from '../components/ToggleInput'
+import { useRouter } from 'next/router'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
@@ -26,7 +27,6 @@ export const getStaticProps: GetStaticProps = async context => {
 		allowXp: user?.allowXp,
 		allowBadge: user?.allowBadge
 	}
-
 	return {
 		props: props,
 		revalidate: 10
@@ -64,6 +64,7 @@ export default function Edit_Profile(props: {
 		allowXp,
 		allowBadge
 	})
+	const router = useRouter()
 
 	async function handleInfo() {
 		setUserInfo({
@@ -234,7 +235,7 @@ export default function Edit_Profile(props: {
 									type="button"
 									value="Cancel"
 									onClick={() => {
-										//do something
+										router.push('/')
 									}}
 								></SecondaryButton>
 								<PrimaryButton

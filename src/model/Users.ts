@@ -21,7 +21,27 @@ const userSchema = new Schema({
 	facebook: String,
 	behance: String,
 	dribbble: String,
-	education: [String]
+	education: [
+		{
+			index: { type: Number },
+			degree: { type: String },
+			college: { type: String },
+			start: { type: String },
+			end: { type: String },
+			desc: { type: String }
+		}
+	],
+	experience: [
+		{
+			index: { type: Number },
+			role: { type: String },
+			location: { type: String },
+			start: { type: String },
+			end: { type: String },
+			desc: { type: String },
+			organisation: { type: String }
+		}
+	]
 })
 
 export default mongoose.models?.Users || mongoose.model('Users', userSchema)

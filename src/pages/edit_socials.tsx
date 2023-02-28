@@ -7,6 +7,7 @@ import Users from '../model/Users'
 import PrimaryButton from '../components/PrimaryButton'
 import SecondaryButton from '../components/SecondaryButton'
 import Input from '../components/PrimaryInput'
+import { useRouter } from 'next/router'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
@@ -50,6 +51,7 @@ export default function Edit_Socials(props: {
 		behance,
 		dribbble
 	})
+	const router = useRouter()
 
 	async function handleLinks() {
 		setLinks({
@@ -155,7 +157,7 @@ export default function Edit_Socials(props: {
 									type="button"
 									value="Cancel"
 									onClick={() => {
-										//do something
+										router.push('/')
 									}}
 								></SecondaryButton>
 								<PrimaryButton

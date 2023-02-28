@@ -1,7 +1,42 @@
+import mongoose from 'mongoose'
+import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import Card from './Card'
+import Users from '../model/Users'
+import { useState } from 'react'
 
-export default function Portfolio() {
+export default function Portfolio(props: {
+	playgrounds: [
+		{
+			index: number
+			title: string
+			type: string
+			src: string
+			alt: string
+			selected: boolean
+			language: string
+			date: string
+		}
+	]
+	projects: [
+		{
+			index: number
+			title: string
+			type: string
+			src: string
+			alt: string
+			selected: boolean
+			language: string
+			date: string
+		}
+	]
+}) {
+	const [projects, setProjects] = useState(
+		props.projects.filter((project: { selected: boolean }) => project.selected == true)
+	)
+	const [playgrounds, setPlaygrounds] = useState(
+		props.playgrounds.filter((playground: { selected: boolean }) => playground.selected == true)
+	)
 	return (
 		<>
 			<div className="w-8/12 h-fit mt-12 mb-12">
@@ -9,7 +44,7 @@ export default function Portfolio() {
 					<h1 className="font-bold text-2xl">Stats</h1>
 				</div>
 				<div className="grid grid-cols-2 gap-4">
-					<div className="flex mb-2 bg-gray-50 p-4 rounded-lg ">
+					<div className="flex mb-2 bg-gray-50 p-4 rounded-lg border-2 border-gray-100">
 						<div>
 							<Image
 								src="/Lightning.svg"
@@ -29,7 +64,7 @@ export default function Portfolio() {
 						</div>
 					</div>
 
-					<div className="flex mb-2 bg-gray-50 p-4 rounded-lg ">
+					<div className="flex mb-2 bg-gray-50 p-4 rounded-lg border-2 border-gray-100">
 						<div>
 							<Image
 								src="/StarFour.svg"
@@ -49,7 +84,7 @@ export default function Portfolio() {
 						</div>
 					</div>
 
-					<div className="flex mb-2 bg-gray-50 p-4 rounded-lg ">
+					<div className="flex mb-2 bg-gray-50 p-4 rounded-lg border-2 border-gray-100">
 						<div>
 							<Image
 								src="/cup.svg"
@@ -69,7 +104,7 @@ export default function Portfolio() {
 						</div>
 					</div>
 
-					<div className="flex mb-2 bg-gray-50 p-4 rounded-lg ">
+					<div className="flex mb-2 bg-gray-50 p-4 rounded-lg border-2 border-gray-100">
 						<div>
 							<Image
 								src="/Heartbeat.svg"
@@ -95,42 +130,33 @@ export default function Portfolio() {
 						<h1 className="font-bold text-2xl">Projects</h1>
 					</div>
 					<div className="grid grid-cols-2 gap-4">
-						<Card
-							type="project"
-							src={'/project-img.png'}
-							alt="Image"
-							title="Facebook Login Page"
-							lang="HTML/CSS"
-							date="12/2/2023"
-							selected="false"
-						/>
-						<Card
-							type="project"
-							src={'/project-img.png'}
-							alt="Image"
-							title="Quiz App"
-							lang="HTML/CSS"
-							date="12/2/2023"
-							selected="false"
-						/>
-						<Card
-							type="project"
-							src={'/project-img.png'}
-							alt="Image"
-							title="Twitter Clone"
-							lang="HTML/CSS"
-							date="12/2/2023"
-							selected="false"
-						/>
-						<Card
-							type="project"
-							src={'/project-img.png'}
-							alt="Image"
-							title="Calculator"
-							lang="HTML/CSS"
-							date="12/2/2023"
-							selected="false"
-						/>
+						{projects.map(
+							(project: {
+								index: number
+								title: string
+								type: string
+								src: string
+								alt: string
+								selected: boolean
+								language: string
+								date: string
+							}) => (
+								<div
+									key={project.index}
+									className="rounded-lg border-2 border-gray-100"
+								>
+									<Card
+										type={project.type}
+										src={project.src}
+										alt={project.alt}
+										title={project.title}
+										lang={project.language}
+										date={project.date}
+										selected={project.selected}
+									/>
+								</div>
+							)
+						)}
 					</div>
 				</div>
 			</div>
@@ -141,42 +167,33 @@ export default function Portfolio() {
 						<h1 className="font-bold text-2xl">Playgrounds</h1>
 					</div>
 					<div className="grid grid-cols-2 gap-4">
-						<Card
-							type="playground"
-							src={'/html-logo.png'}
-							alt="Image"
-							title="Facebook Clone"
-							lang="HTML/CSS"
-							date="12/2/2023"
-							selected="false"
-						/>
-						<Card
-							type="playground"
-							src={'/html-logo.png'}
-							alt="Image"
-							title="Facebook Clone"
-							lang="HTML/CSS"
-							date="12/2/2023"
-							selected="false"
-						/>
-						<Card
-							type="playground"
-							src={'/html-logo.png'}
-							alt="Image"
-							title="Facebook Clone"
-							lang="HTML/CSS"
-							date="12/2/2023"
-							selected="false"
-						/>
-						<Card
-							type="playground"
-							src={'/html-logo.png'}
-							alt="Image"
-							title="Facebook Clone"
-							lang="HTML/CSS"
-							date="12/2/2023"
-							selected="false"
-						/>
+						{playgrounds.map(
+							(playground: {
+								index: number
+								title: string
+								type: string
+								src: string
+								alt: string
+								selected: boolean
+								language: string
+								date: string
+							}) => (
+								<div
+									key={playground.index}
+									className="rounded-lg border-2 border-gray-100"
+								>
+									<Card
+										type={playground.type}
+										src={playground.src}
+										alt={playground.alt}
+										title={playground.title}
+										lang={playground.language}
+										date={playground.date}
+										selected={playground.selected}
+									/>
+								</div>
+							)
+						)}
 					</div>
 				</div>
 			</div>

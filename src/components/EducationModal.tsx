@@ -1,11 +1,55 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { FormEvent, useEffect, useRef, useState } from 'react'
+
 import PrimaryButton from './PrimaryButton'
 import Input from './PrimaryInput'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
 
-export default function EducationModal() {
+export default function EducationModal(props: {
+	education: [
+		{
+			index: number
+			degree: string
+			college: string
+			start: string
+			end: string
+			desc: string
+		}
+	]
+}) {
 	const [showModal, setShowModal] = useState<boolean>(false)
+	const [degree, setDegree] = useState<string>('')
+	const [college, setCollege] = useState<string>('')
+	const [start, setStart] = useState<string>('')
+	const [end, setEnd] = useState<string>('')
+	const [desc, setDesc] = useState<string>('')
+	const [education, setEducation] = useState({
+		degree,
+		college,
+		start,
+		end,
+		desc
+	})
+
+	async function handleSubmit() {
+		setEducation({
+			degree,
+			college,
+			start,
+			end,
+			desc
+		})
+		const res = await fetch('/api/insertEducation', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify(education)
+		})
+		if (res.status == 200) {
+			setShowModal(false)
+		}
+	}
 
 	return (
 		<>
@@ -26,15 +70,23 @@ export default function EducationModal() {
 								</div>
 								{/*body*/}
 								<div className="relative py-6 px-6 flex-auto">
-									<form className="w-full relative flex-auto" action="">
+									<form
+										className="w-full relative flex-auto"
+										onSubmit={e => {
+											e.preventDefault()
+											handleSubmit()
+										}}
+									>
 										<Input
 											type="text"
 											label="Degree"
-											id=""
+											id="degree"
 											className=""
 											info=""
-											value=""
-											onChange={e => e.preventDefault()}
+											value={degree}
+											onChange={e => {
+												setDegree(e.target.value)
+											}}
 										/>
 										<Input
 											type="text"
@@ -42,8 +94,10 @@ export default function EducationModal() {
 											id=""
 											className=""
 											info=""
-											value=""
-											onChange={e => e.preventDefault()}
+											value={college}
+											onChange={e => {
+												setCollege(e.target.value)
+											}}
 										/>
 										<div className="flex flex-wrap justify-between">
 											<Input
@@ -52,8 +106,10 @@ export default function EducationModal() {
 												className="shrink grow w-72"
 												id=""
 												info=""
-												value=""
-												onChange={e => e.preventDefault()}
+												value={start}
+												onChange={e => {
+													setStart(e.target.value)
+												}}
 											/>
 											<Input
 												type="text"
@@ -61,9 +117,28 @@ export default function EducationModal() {
 												className="shrink grow w-72"
 												id=""
 												info=""
-												value=""
-												onChange={e => e.preventDefault()}
+												value={end}
+												onChange={e => {
+													setEnd(e.target.value)
+												}}
 											/>
+										</div>
+										<div className="mb-6 flex flex-col">
+											<label
+												htmlFor="about"
+												className="text-md font-medium mb-1"
+											>
+												Description
+											</label>
+											<textarea
+												name="description"
+												id="description"
+												value={desc}
+												onChange={e => {
+													setDesc(e.target.value)
+												}}
+												className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-indigo-600"
+											></textarea>
 										</div>
 										<div className="flex items-center justify-end rounded-b">
 											<SecondaryButton
@@ -72,9 +147,11 @@ export default function EducationModal() {
 												onClick={() => setShowModal(false)}
 											/>
 											<PrimaryButton
-												type="button"
+												type="submit"
 												value="Save"
-												onClick={() => setShowModal(false)}
+												onClick={() => {
+													//do something
+												}}
 											></PrimaryButton>
 										</div>
 									</form>

@@ -1,7 +1,7 @@
 export default function PrimaryButton(props: {
 	type: 'submit' | 'reset' | 'button'
 	value: string
-	onClick: () => void
+	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 }) {
 	return (
 		<button

@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 export default function Card(props: {
 	type: string
-	selected: string
+	selected: boolean
 	src: string
 	alt: string
 	title: string
@@ -11,17 +11,10 @@ export default function Card(props: {
 	date: string
 }) {
 	const [type, setType] = useState<string>(props.type)
-	const selected: string = props.selected
 
 	if (type == 'playground') {
 		return (
-			<div
-				className={`${
-					selected == 'true'
-						? 'flex mb-2 bg-indigo-50 p-5 rounded-lg border border-indigo-600'
-						: 'flex mb-2 bg-gray-50 p-5 rounded-lg '
-				} `}
-			>
+			<div className="flex bg-gray-50 p-5 rounded-lg">
 				<Image src={props.src} alt={props.alt} width="60" height="50" />
 				<div className="ml-4">
 					<h2 className="text-md text-gray-900 font-semibold">{props.title}</h2>
@@ -33,20 +26,14 @@ export default function Card(props: {
 	} else {
 		return (
 			<div>
-				<div
-					className={`${
-						selected == 'true'
-							? 'flex flex-col mb-2 bg-indigo-50 p-5 rounded-lg border border-indigo-600'
-							: 'flex flex-col mb-2 bg-gray-50 p-5 rounded-lg '
-					} `}
-				>
+				<div className="flex flex-col bg-gray-50 p-5 rounded-lg">
 					<div>
 						<Image
 							src={props.src}
 							alt={props.alt}
 							width="320"
 							height="100"
-							className="rounded-md"
+							className="rounded-md w-fit mb-2"
 						/>
 					</div>
 					<div className="ml-4">

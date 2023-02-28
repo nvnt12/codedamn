@@ -1,11 +1,59 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PrimaryButton from './PrimaryButton'
 import Input from './PrimaryInput'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
 
-export default function ExperienceModal() {
+export default function ExperienceModal(props: {
+	experience: [
+		{
+			index: number
+			role: string
+			location: string
+			start: string
+			end: string
+			desc: string
+			organisation: string
+		}
+	]
+}) {
 	const [showModal, setShowModal] = useState<boolean>(false)
+	const [role, setRole] = useState<string>('')
+	const [location, setLocation] = useState<string>('')
+	const [start, setStart] = useState<string>('')
+	const [end, setEnd] = useState<string>('')
+	const [desc, setDesc] = useState<string>('')
+	const [organisation, setOrganisation] = useState<string>('')
+	const [experience, setexperience] = useState({
+		role,
+		location,
+		start,
+		end,
+		desc,
+		organisation
+	})
+
+	async function handleSubmit() {
+		setexperience({
+			role,
+			location,
+			start,
+			end,
+			desc,
+			organisation
+		})
+		const res = await fetch('/api/insertExperience', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify(experience)
+		})
+		if (res.status == 200) {
+			setShowModal(false)
+		}
+	}
+
 	return (
 		<>
 			<TertiaryButton
@@ -25,13 +73,21 @@ export default function ExperienceModal() {
 								</div>
 								{/*body*/}
 								<div className="relative py-6 px-6 flex-auto">
-									<form className="w-full relative flex-auto" action="">
+									<form
+										className="w-full relative flex-auto"
+										onSubmit={e => {
+											e.preventDefault()
+											handleSubmit()
+										}}
+									>
 										<Input
 											type="text"
 											label="Profile"
 											id=""
-											value=""
-											onChange={e => e.preventDefault()}
+											value={role}
+											onChange={e => {
+												setRole(e.target.value)
+											}}
 											info=""
 											className=""
 										/>
@@ -39,8 +95,10 @@ export default function ExperienceModal() {
 											type="text"
 											label="Organization"
 											id=""
-											value=""
-											onChange={e => e.preventDefault()}
+											value={organisation}
+											onChange={e => {
+												setOrganisation(e.target.value)
+											}}
 											info=""
 											className=""
 										/>
@@ -48,8 +106,10 @@ export default function ExperienceModal() {
 											type="text"
 											label="Location"
 											id=""
-											value=""
-											onChange={e => e.preventDefault()}
+											value={location}
+											onChange={e => {
+												setLocation(e.target.value)
+											}}
 											info=""
 											className=""
 										/>
@@ -58,8 +118,10 @@ export default function ExperienceModal() {
 												type="text"
 												label="Start"
 												id=""
-												value=""
-												onChange={e => e.preventDefault()}
+												value={start}
+												onChange={e => {
+													setStart(e.target.value)
+												}}
 												info=""
 												className="shrink grow w-72"
 											/>
@@ -67,8 +129,10 @@ export default function ExperienceModal() {
 												type="text"
 												label="End"
 												id=""
-												value=""
-												onChange={e => e.preventDefault()}
+												value={end}
+												onChange={e => {
+													setEnd(e.target.value)
+												}}
 												info=""
 												className="shrink grow w-72"
 											/>
@@ -83,6 +147,10 @@ export default function ExperienceModal() {
 											<textarea
 												name="description"
 												id="description"
+												value={desc}
+												onChange={e => {
+													setDesc(e.target.value)
+												}}
 												className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-indigo-600"
 											></textarea>
 										</div>
@@ -93,9 +161,11 @@ export default function ExperienceModal() {
 												onClick={() => setShowModal(false)}
 											/>
 											<PrimaryButton
-												type="button"
+												type="submit"
 												value="Save"
-												onClick={() => setShowModal(false)}
+												onClick={() => {
+													//do something
+												}}
 											></PrimaryButton>
 										</div>
 									</form>

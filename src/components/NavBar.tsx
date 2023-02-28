@@ -72,19 +72,19 @@ export default function NavBar() {
 							<div className="p-2">
 								<Link
 									href="/"
-									className="block px-4 py-2 text-md text-gray-700 hover:bg-indigo-500 hover:text-white hover:rounded-md"
+									className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-50 hover:text-gray-800 "
 								>
 									Your profile
 								</Link>
 								<Link
 									href="/edit_profile"
-									className="block px-4 py-2 text-md text-gray-700 hover:bg-indigo-500 hover:text-white hover:rounded-md"
+									className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-50 hover:text-gray-800 "
 								>
 									Edit profile
 								</Link>
 								<Link
 									href="/"
-									className="block px-4 py-2 text-md text-gray-700 hover:bg-indigo-500 hover:text-white hover:rounded-md"
+									className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-50 hover:text-gray-800 "
 								>
 									Sign out
 								</Link>

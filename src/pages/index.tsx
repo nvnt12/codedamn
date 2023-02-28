@@ -9,17 +9,18 @@ import mongoose from 'mongoose'
 import Users from '../model/Users'
 import { TbEdit } from 'react-icons/tb'
 import PrimaryButton from '../components/PrimaryButton'
-import Card from '../components/Card'
 import Portfolio from '../components/Porfolio'
 import Resume from '../components/Resume'
+import { useState } from 'react'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
 
 	const user = await Users.findById(process.env.USER_ID).lean()
 
-	const props = {
+	const prop = JSON.stringify({
 		name: user?.name,
+		about: user?.about,
 		profession: user?.profession,
 		institute: user?.institute,
 		skills: user?.skills,
@@ -29,33 +30,93 @@ export const getStaticProps: GetStaticProps = async context => {
 		instagram: user?.instagram,
 		facebook: user?.facebook,
 		behance: user?.behance,
-		dribbble: user?.dribbble
-	}
+		dribbble: user?.dribbble,
+		projects: user?.projects,
+		playgrounds: user?.playgrounds,
+		interests: user?.interests,
+		education: user?.education,
+		experience: user?.experience
+	})
+	const props = JSON.parse(prop)
 
 	return {
 		props: props,
-
 		revalidate: 10
 	}
 }
 
 export default function Home(props: {
 	name: string
+	about: string
 	profession: string
 	location: string
 	institute: string
-	skills: string[]
+	skills: [
+		{
+			index: number
+			skill: string
+			rate: string
+		}
+	]
 	github: string
 	youtube: string
 	instagram: string
 	facebook: string
 	behance: string
 	dribbble: string
+	playgrounds: [
+		{
+			index: number
+			title: string
+			type: string
+			src: string
+			alt: string
+			selected: boolean
+			language: string
+			date: string
+		}
+	]
+	projects: [
+		{
+			index: number
+			title: string
+			type: string
+			src: string
+			alt: string
+			selected: boolean
+			language: string
+			date: string
+		}
+	]
+	interests: string[]
+	education: [
+		{
+			index: number
+			degree: string
+			college: string
+			start: string
+			end: string
+			img: string
+			desc: string
+		}
+	]
+	experience: [
+		{
+			index: number
+			role: string
+			location: string
+			start: string
+			end: string
+			desc: string
+			organisation: string
+			img: string
+		}
+	]
 }) {
 	const name: string = props.name
 	const profession: string = props.profession
 	const institute: string = props.institute
-	const skills: any = props.skills
+	const skills = props.skills
 	const location: string = props.location
 	const github: string = props.github
 	const youtube: string = props.youtube
@@ -63,6 +124,8 @@ export default function Home(props: {
 	const dribbble: string = props.dribbble
 	const behance: string = props.behance
 	const instagram: string = props.instagram
+	const [portfolio, setPortfolio] = useState<boolean>(true)
+	const [resume, setResume] = useState<boolean>(false)
 
 	return (
 		<>
@@ -122,14 +185,16 @@ export default function Home(props: {
 							</div>
 							<div className="pt-10 pb-10">
 								<ul className="flex flex-wrap">
-									{skills.map((skill: string, index: number) => (
-										<li
-											key={index}
-											className="bg-gray-100 pr-4 pl-4 pt-1.5 pb-1.5 rounded-md text-md font-semibold mr-3 mb-4"
-										>
-											{skill}
-										</li>
-									))}
+									{skills.map(
+										(skill: { index: number; skill: string; rate: string }) => (
+											<li
+												key={skill.skill}
+												className="bg-gray-100 pr-4 pl-4 pt-1.5 pb-1.5 rounded-md text-md font-semibold mr-3 mb-4"
+											>
+												{skill.skill}
+											</li>
+										)
+									)}
 								</ul>
 							</div>
 
@@ -194,8 +259,8 @@ export default function Home(props: {
 									{facebook && (
 										<Link href="/">
 											<Image
-												src="/facebook-official.svg"
-												alt="facebook-official"
+												src="/facebook-icon.svg"
+												alt="facebook-icon"
 												width="40"
 												height="40"
 												className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4"
@@ -219,17 +284,46 @@ export default function Home(props: {
 				</div>
 
 				<div className="border-2 w-8/12 h-fit rounded-2xl border-gray-100 mt-12 pr-4 pl-4 pt-3 pb-3">
-					<button className="w-20 h-8 bg-indigo-100 text-indigo-500 text-sm font-semibold pr-3 pl-3 rounded-lg mr-4">
+					<button
+						className={`${
+							portfolio == true
+								? 'w-20 h-8 bg-indigo-100 text-indigo-500 text-sm font-semibold pr-3 pl-3 rounded-lg mr-4'
+								: 'w-20 h-8 bg-gray-100 text-gray-500 text-sm font-semibold pr-3 pl-3 rounded-lg mr-4'
+						} `}
+						onClick={() => {
+							setPortfolio(!portfolio)
+							setResume(!resume)
+						}}
+					>
 						Portfolio
 					</button>
-					<button className="w-20 h-8 bg-gray-100 text-gray-500 text-sm font-semibold pr-3 pl-3 rounded-lg mr-4">
+					<button
+						className={`${
+							resume == true
+								? 'w-20 h-8 bg-indigo-100 text-indigo-500 text-sm font-semibold pr-3 pl-3 rounded-lg mr-4'
+								: 'w-20 h-8 bg-gray-100 text-gray-500 text-sm font-semibold pr-3 pl-3 rounded-lg mr-4'
+						} `}
+						onClick={() => {
+							setResume(!resume)
+							setPortfolio(!portfolio)
+						}}
+					>
 						Resume
 					</button>
 				</div>
+				{portfolio && (
+					<Portfolio playgrounds={props.playgrounds} projects={props.projects} />
+				)}
 
-				{/* <Portfolio /> */}
-
-				<Resume />
+				{resume && (
+					<Resume
+						about={props.about}
+						skills={props.skills}
+						education={props.education}
+						experience={props.experience}
+						interests={props.interests}
+					/>
+				)}
 			</div>
 		</>
 	)

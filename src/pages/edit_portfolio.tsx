@@ -3,8 +3,59 @@ import SideNav from '../components/SideNav'
 import PrimaryButton from '../components/PrimaryButton'
 import SecondaryButton from '../components/SecondaryButton'
 import Card from '../components/Card'
+import mongoose from 'mongoose'
+import { GetStaticProps } from 'next'
+import Users from '../model/Users'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 
-export default function Edit_Porfolio() {
+export const getStaticProps: GetStaticProps = async context => {
+	mongoose.connect(process.env.MONGODB_URI as string)
+
+	const user = await Users.findById(process.env.USER_ID).lean()
+
+	const props = {
+		id: user?.id,
+		projects: user?.projects,
+		playgrounds: user?.playgrounds
+	}
+
+	return {
+		props: props,
+		revalidate: 10
+	}
+}
+
+export default function Edit_Porfolio(props: {
+	playgrounds: [
+		{
+			index: number
+			title: string
+			type: string
+			src: string
+			alt: string
+			selected: boolean
+			language: string
+			date: string
+		}
+	]
+	projects: [
+		{
+			index: number
+			title: string
+			type: string
+			src: string
+			alt: string
+			selected: boolean
+			language: string
+			date: string
+		}
+	]
+}) {
+	const [projects, setProjects] = useState(props.projects)
+	const [playgrounds, setPlaygrounds] = useState(props.playgrounds)
+	const router = useRouter()
+
 	return (
 		<>
 			<NavBar />
@@ -16,42 +67,37 @@ export default function Edit_Porfolio() {
 							<h1 className="font-semibold text-2xl">Playgrounds</h1>
 						</div>
 						<div className="grid grid-cols-2 gap-4">
-							<Card
-								type="playground"
-								src={'/html-logo.png'}
-								alt="Image"
-								title="Facebook Clone"
-								lang="HTML/CSS"
-								date="12/2/2023"
-								selected="true"
-							/>
-							<Card
-								type="playground"
-								src={'/html-logo.png'}
-								alt="Image"
-								title="Facebook Clone"
-								lang="HTML/CSS"
-								date="12/2/2023"
-								selected="false"
-							/>
-							<Card
-								type="playground"
-								src={'/html-logo.png'}
-								alt="Image"
-								title="Facebook Clone"
-								lang="HTML/CSS"
-								date="12/2/2023"
-								selected="true"
-							/>
-							<Card
-								type="playground"
-								src={'/html-logo.png'}
-								alt="Image"
-								title="Facebook Clone"
-								lang="HTML/CSS"
-								date="12/2/2023"
-								selected="false"
-							/>
+							{playgrounds.map(
+								(playground: {
+									index: number
+									title: string
+									type: string
+									src: string
+									alt: string
+									selected: boolean
+									language: string
+									date: string
+								}) => (
+									<div
+										key={playground.index}
+										className={`${
+											playground.selected == true
+												? 'rounded-lg border border-indigo-600'
+												: 'rounded-lg border-2 border-gray-100'
+										} `}
+									>
+										<Card
+											type={playground.type}
+											src={playground.src}
+											alt={playground.alt}
+											title={playground.title}
+											lang={playground.language}
+											date={playground.date}
+											selected={playground.selected}
+										/>
+									</div>
+								)
+							)}
 						</div>
 					</div>
 					<div className="mb-8 w-full">
@@ -59,42 +105,37 @@ export default function Edit_Porfolio() {
 							<h1 className="font-semibold text-2xl">Projects</h1>
 						</div>
 						<div className="grid grid-cols-2 gap-4">
-							<Card
-								type="project"
-								src={'/project-img.png'}
-								alt="Image"
-								title="Facebook Login Page"
-								lang="HTML/CSS"
-								date="12/2/2023"
-								selected="true"
-							/>
-							<Card
-								type="project"
-								src={'/project-img.png'}
-								alt="Image"
-								title="Quiz App"
-								lang="HTML/CSS"
-								date="12/2/2023"
-								selected="false"
-							/>
-							<Card
-								type="project"
-								src={'/project-img.png'}
-								alt="Image"
-								title="Twitter Clone"
-								lang="HTML/CSS"
-								date="12/2/2023"
-								selected="false"
-							/>
-							<Card
-								type="project"
-								src={'/project-img.png'}
-								alt="Image"
-								title="Calculator"
-								lang="HTML/CSS"
-								date="12/2/2023"
-								selected="false"
-							/>
+							{projects.map(
+								(project: {
+									index: number
+									title: string
+									type: string
+									src: string
+									alt: string
+									selected: boolean
+									language: string
+									date: string
+								}) => (
+									<div
+										key={project.index}
+										className={`${
+											project.selected == true
+												? 'rounded-lg border border-indigo-600'
+												: 'rounded-lg border-2 border-gray-100'
+										} `}
+									>
+										<Card
+											type={project.type}
+											src={project.src}
+											alt={project.alt}
+											title={project.title}
+											lang={project.language}
+											date={project.date}
+											selected={project.selected}
+										/>
+									</div>
+								)
+							)}
 						</div>
 					</div>
 
@@ -103,7 +144,7 @@ export default function Edit_Porfolio() {
 							type="button"
 							value="Cancel"
 							onClick={() => {
-								//cancel
+								router.push('/')
 							}}
 						></SecondaryButton>
 						<PrimaryButton
