@@ -130,8 +130,8 @@ export default function Home(props: {
 	return (
 		<>
 			<NavBar />
-			<div className="h-full w-full flex flex-col items-center">
-				<div className="border-2 w-8/12 h-fit rounded-2xl border-gray-100 mt-12">
+			<div className="h-full w-full flex flex-col items-center sm:px-3 sm:w-full md:w-full md:px-6">
+				<div className="border-2 w-8/12 h-fit rounded-2xl border-gray-100 mt-12 sm:w-full sm:mt-6 md:w-full">
 					<div>
 						<div className="relative">
 							<Image
@@ -141,49 +141,49 @@ export default function Home(props: {
 								height="80"
 								className="rounded-t-2xl w-full h-40"
 							/>
-							<div className="flex items-center absolute top-5 right-7  w-fit">
+							<div className="flex items-center absolute top-5 right-7 sm:right-5 w-fit">
 								<button
-									className="px-2 py-1.5 rounded-lg border border-white border-opacity-50 flex text-base items-center text-white font-semibold bg-white bg-opacity-20
+									className="px-2 py-1.5 rounded-lg border border-white border-opacity-50 flex text-base items-center text-white font-semibold bg-white bg-opacity-20 sm:text-sm
 								"
 								>
-									<TbEdit className="h-6 w-6 mr-2" />
+									<TbEdit className="h-6 w-6 mr-2 sm:h-5 sm:w-5" />
 									Edit cover
 								</button>
 							</div>
 						</div>
 					</div>
-					<div className="relative flex p-6">
-						<div className="relative -top-28">
+					<div className="relative flex p-5 sm:flex-wrap sm:px-2 md:flex-wrap md:p-4">
+						<div className="relative pl-2 -top-28 mt-2 sm:-top-40 sm:h-0 sm:pl-4 sm:mt-1 md:h-12">
 							<Image
 								src={'/pfp.jpeg'}
 								alt={'Profile picture'}
 								width="200"
 								height="200"
-								className="rounded-full border-2 border-white -top-6"
+								className="rounded-full border-2 border-white sm:h-28 sm:w-28 md:h-36 md:w-36"
 							/>
 						</div>
-						<div className="pl-6 w-full">
-							<div className="flex items-center mb-2">
+						<div className="pl-6 w-full sm:pl-0 md:pl-2">
+							<div className="flex items-center mb-2 sm:flex-wrap sm:pl-2 md:flex-wrap flex-wrap">
 								<h1 className="text-3xl font-bold mr-3">{name}</h1>
-								<p className="bg-lime-300 pr-2 pl-2 rounded-md text-md font-semibold mr-3">
+								<p className="bg-lime-300 pr-2 pl-2 rounded-md text-md font-semibold mr-3 sm:mt-1">
 									Pro
 								</p>
-								<p className="bg-sky-100 pr-2 pl-2 rounded-md text-md font-semibold text-sky-800">
+								<p className="bg-sky-100 pr-2 pl-2 rounded-md text-md font-semibold text-sky-800 sm:mt-1 md:mt-1">
 									Looking for job
 								</p>
 							</div>
-							<div className="flex items-center">
+							<div className="flex items-center sm:pl-2">
 								<p className="text-lg text-gray-500 font-normal">{profession}</p>
 								<span className="text-lg text-gray-500 font-normal mr-2 ml-2">
 									|
 								</span>
 								<p className="text-lg text-gray-500 font-normal">{institute}</p>
 							</div>
-							<div className="flex items-center">
+							<div className="flex items-center sm:pl-2">
 								<BiMap className="h-5 w-5 fill-gray-400 mr-1" />
 								<p className="text-lg text-gray-400 font-normal">{location}</p>
 							</div>
-							<div className="pt-10 pb-10">
+							<div className="pt-10 pb-10 sm:pt-4 sm:pb-4 sm:pl-2">
 								<ul className="flex flex-wrap">
 									{skills.map(
 										(skill: { index: number; skill: string; rate: string }) => (
@@ -198,8 +198,8 @@ export default function Home(props: {
 								</ul>
 							</div>
 
-							<div className="flex justify-between pt-10 pb-4 border-t-2 border-gray-100">
-								<div className="flex flex-wrap">
+							<div className="flex justify-between pt-10 pb-4 border-t-2 border-gray-100 sm:pt-3 sm:pb-0 sm:flex-wrap items-center">
+								<div className="flex flex-wrap sm:mt-1 sm:pl-2">
 									{github && (
 										<Link href={github}>
 											<Image
@@ -268,8 +268,8 @@ export default function Home(props: {
 										</Link>
 									)}
 								</div>
-								<div className="flex">
-									<HiOutlineBookmark className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2  mr-4" />
+								<div className="flex sm:mt-1">
+									<HiOutlineBookmark className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4 sm:mr-2" />
 									<PrimaryButton
 										value="Contact"
 										type="button"
@@ -283,7 +283,7 @@ export default function Home(props: {
 					</div>
 				</div>
 
-				<div className="border-2 w-8/12 h-fit rounded-2xl border-gray-100 mt-12 pr-4 pl-4 pt-3 pb-3">
+				<div className="border-2 w-8/12 h-fit rounded-2xl border-gray-100 mt-12 pr-4 pl-4 pt-3 pb-3 sm:w-full sm:mt-6 md:w-full">
 					<button
 						className={`${
 							portfolio == true
@@ -291,8 +291,8 @@ export default function Home(props: {
 								: 'w-20 h-8 bg-gray-100 text-gray-500 text-sm font-semibold pr-3 pl-3 rounded-lg mr-4'
 						} `}
 						onClick={() => {
-							setPortfolio(!portfolio)
-							setResume(!resume)
+							setPortfolio(true)
+							setResume(false)
 						}}
 					>
 						Portfolio
@@ -304,26 +304,29 @@ export default function Home(props: {
 								: 'w-20 h-8 bg-gray-100 text-gray-500 text-sm font-semibold pr-3 pl-3 rounded-lg mr-4'
 						} `}
 						onClick={() => {
-							setResume(!resume)
-							setPortfolio(!portfolio)
+							setResume(true)
+							setPortfolio(false)
 						}}
 					>
 						Resume
 					</button>
 				</div>
-				{portfolio && (
-					<Portfolio playgrounds={props.playgrounds} projects={props.projects} />
-				)}
 
-				{resume && (
-					<Resume
-						about={props.about}
-						skills={props.skills}
-						education={props.education}
-						experience={props.experience}
-						interests={props.interests}
-					/>
-				)}
+				<div className="w-8/12 h-fit sm:w-full md:w-full">
+					{portfolio && (
+						<Portfolio playgrounds={props.playgrounds} projects={props.projects} />
+					)}
+
+					{resume && (
+						<Resume
+							about={props.about}
+							skills={props.skills}
+							education={props.education}
+							experience={props.experience}
+							interests={props.interests}
+						/>
+					)}
+				</div>
 			</div>
 		</>
 	)

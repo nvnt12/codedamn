@@ -33,7 +33,7 @@ export default function Card(props: {
 							alt={props.alt}
 							width="320"
 							height="100"
-							className="rounded-md w-fit mb-2"
+							className="rounded-md w-fit sm:w-full mb-2"
 						/>
 					</div>
 					<div className="ml-4">

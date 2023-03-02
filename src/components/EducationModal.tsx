@@ -61,7 +61,7 @@ export default function EducationModal(props: {
 			{showModal ? (
 				<>
 					<div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
-						<div className="relative w-3/6  mx-auto max-w-3xl">
+						<div className="relative w-5/6 mx-auto max-w-3xl sm:w-full sm:px-2 md:w-5/6 md:px-6 sm:h-5/6">
 							{/*content*/}
 							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white">
 								{/*header*/}
@@ -99,11 +99,11 @@ export default function EducationModal(props: {
 												setCollege(e.target.value)
 											}}
 										/>
-										<div className="flex flex-wrap justify-between">
+										<div className="flex w-full gap-4 sm:flex-wrap">
 											<Input
 												type="year"
 												label="Start"
-												className="shrink grow w-72"
+												className=""
 												id=""
 												info=""
 												value={start}
@@ -114,7 +114,7 @@ export default function EducationModal(props: {
 											<Input
 												type="text"
 												label="End"
-												className="shrink grow w-72"
+												className=""
 												id=""
 												info=""
 												value={end}

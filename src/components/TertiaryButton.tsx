@@ -9,7 +9,7 @@ export default function TertiaryButton(props: {
 			type={props.type}
 			onClick={props.onClick}
 		>
-			<span className="text-xl mr-3">+</span>
+			<span className="text-xl mr-3 sm:mr-1">+</span>
 			{props.value}
 		</button>
 	)

@@ -59,14 +59,14 @@ export default function Edit_Porfolio(props: {
 	return (
 		<>
 			<NavBar />
-			<div className="flex p-12 justify-between">
+			<div className="flex p-12 justify-between sm:flex-wrap sm:px-3 sm:py-6 md:px-4 md:py-8 md:ml-2">
 				<SideNav />
-				<div className="w-9/12 px-20">
+				<div className="w-9/12 px-20 sm:w-full sm:mt-6 sm:px-2 md:w-full md:px-6">
 					<div className="mb-8 w-full">
 						<div className="flex justify-between items-center mb-6">
 							<h1 className="font-semibold text-2xl">Playgrounds</h1>
 						</div>
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid grid-cols-2 gap-4 sm:grid-cols-1 sm:gap-3">
 							{playgrounds.map(
 								(playground: {
 									index: number
@@ -104,7 +104,7 @@ export default function Edit_Porfolio(props: {
 						<div className="flex justify-between items-center mb-6">
 							<h1 className="font-semibold text-2xl">Projects</h1>
 						</div>
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid grid-cols-2 gap-4  sm:grid-cols-1 sm:gap-3">
 							{projects.map(
 								(project: {
 									index: number

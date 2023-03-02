@@ -39,11 +39,11 @@ export default function Portfolio(props: {
 	)
 	return (
 		<>
-			<div className="w-8/12 h-fit mt-12 mb-12">
+			<div className="w-full h-fit mt-12 mb-12 sm:w-full sm:mb-6 sm:mt-6">
 				<div className="mb-6">
 					<h1 className="font-bold text-2xl">Stats</h1>
 				</div>
-				<div className="grid grid-cols-2 gap-4">
+				<div className="grid grid-cols-2 gap-4 sm:grid-cols-1 sm:gap-1">
 					<div className="flex mb-2 bg-gray-50 p-4 rounded-lg border-2 border-gray-100">
 						<div>
 							<Image
@@ -124,12 +124,12 @@ export default function Portfolio(props: {
 				</div>
 			</div>
 
-			<div className="w-8/12 h-fit mt-12 mb-12">
+			<div className="w-full h-fit mt-12 mb-12 sm:w-full sm:mb-6 sm:mt-6">
 				<div className="mb-8 w-full">
 					<div className="mb-6">
 						<h1 className="font-bold text-2xl">Projects</h1>
 					</div>
-					<div className="grid grid-cols-2 gap-4">
+					<div className="grid grid-cols-2 gap-4 sm:grid-cols-1 sm:gap-3">
 						{projects.map(
 							(project: {
 								index: number
@@ -161,12 +161,12 @@ export default function Portfolio(props: {
 				</div>
 			</div>
 
-			<div className="w-8/12 h-fit mt-12 mb-12">
+			<div className="w-full h-fit mt-12 mb-12 sm:w-full sm:mb-6 sm:mt-6">
 				<div className="mb-8 w-full">
 					<div className="mb-6">
 						<h1 className="font-bold text-2xl">Playgrounds</h1>
 					</div>
-					<div className="grid grid-cols-2 gap-4">
+					<div className="grid grid-cols-2 mb-12 gap-4 sm:grid-cols-1 sm:gap-3">
 						{playgrounds.map(
 							(playground: {
 								index: number

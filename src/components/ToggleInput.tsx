@@ -17,7 +17,7 @@ export default function Toggle(props: {
 				<label htmlFor="achievements" className="text-lg font-bold mb-1">
 					{props.label}
 				</label>
-				<p>{props.info}</p>
+				<p className="sm:mr-1">{props.info}</p>
 			</div>
 			<div className="flex">
 				<label

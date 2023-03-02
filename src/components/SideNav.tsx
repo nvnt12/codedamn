@@ -8,7 +8,7 @@ export default function SideNav() {
 
 	return (
 		<>
-			<div className="w-72 h-fit rounded-2xl bg-gray-50 border-2 border-gray-100">
+			<div className="w-72 h-fit rounded-2xl bg-gray-50 border-2 border-gray-100 sm:w-full sm:mt-2 md:w-fit md:pr-4">
 				<div className="flex items-center mb-5 mt-5">
 					<div
 						className={`${
@@ -20,8 +20,8 @@ export default function SideNav() {
 					<AiOutlineChrome
 						className={`${
 							current == '/edit_profile'
-								? 'w-6 h-6 ml-6 fill-gray-900'
-								: 'w-6 h-6 ml-6 fill-gray-400'
+								? 'w-6 h-6 ml-6 md:ml-4 fill-gray-900'
+								: 'w-6 h-6 ml-6 md:ml-4 fill-gray-400'
 						} `}
 						href={'/edit_portfolio'}
 					/>
@@ -47,8 +47,8 @@ export default function SideNav() {
 					<AiOutlineChrome
 						className={`${
 							current == '/edit_socials'
-								? 'w-6 h-6 ml-6 fill-gray-900'
-								: 'w-6 h-6 ml-6 fill-gray-400'
+								? 'w-6 h-6 ml-6 md:ml-4 fill-gray-900'
+								: 'w-6 h-6 ml-6 md:ml-4 fill-gray-400'
 						} `}
 						href={'/edit_portfolio'}
 					/>
@@ -74,8 +74,8 @@ export default function SideNav() {
 					<AiOutlineChrome
 						className={`${
 							current == '/edit_portfolio'
-								? 'w-6 h-6 ml-6 fill-gray-900'
-								: 'w-6 h-6 ml-6 fill-gray-400'
+								? 'w-6 h-6 ml-6 md:ml-4 fill-gray-900'
+								: 'w-6 h-6 ml-6 md:ml-4 fill-gray-400'
 						} `}
 						href={'/edit_portfolio'}
 					/>
@@ -101,8 +101,8 @@ export default function SideNav() {
 					<AiOutlineChrome
 						className={`${
 							current == '/edit_resume'
-								? 'w-6 h-6 ml-6 fill-gray-900'
-								: 'w-6 h-6 ml-6 fill-gray-400'
+								? 'w-6 h-6 ml-6 md:ml-4 fill-gray-900'
+								: 'w-6 h-6 ml-6 md:ml-4 fill-gray-400'
 						} `}
 						href={'/edit_portfolio'}
 					/>

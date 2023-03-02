@@ -6,7 +6,7 @@ export default async function Database(req: NextApiRequest, res: NextApiResponse
 	mongoose.connect(process.env.MONGODB_URI as string)
 
 	const reqUser = req.body
-
+	console.log(reqUser)
 	if (
 		reqUser.degree == '' ||
 		reqUser.college == '' ||

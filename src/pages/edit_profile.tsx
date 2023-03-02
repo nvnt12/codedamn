@@ -90,9 +90,9 @@ export default function Edit_Profile(props: {
 	return (
 		<>
 			<NavBar />
-			<div className="flex p-12 justify-between">
+			<div className="flex p-12 justify-between sm:flex-wrap sm:px-3 sm:py-6 md:px-4 md:py-8 md:ml-2">
 				<SideNav />
-				<div className="w-9/12 px-20">
+				<div className="w-9/12 px-20 sm:w-full sm:mt-6 sm:px-2 md:w-full md:px-6">
 					<form
 						onSubmit={e => {
 							e.preventDefault()
@@ -105,11 +105,11 @@ export default function Edit_Profile(props: {
 								alt="Profile picture"
 								width="90"
 								height="90"
-								className="rounded-full mr-6"
+								className="rounded-full mr-6 sm:h-14 sm:w-14 sm:mr-2"
 							/>
 							<PrimaryButton
 								type="button"
-								value="Upload new picture"
+								value="Change"
 								onClick={() => {
 									//do something
 								}}
@@ -179,7 +179,7 @@ export default function Edit_Profile(props: {
 									id="gender"
 									value={gender}
 									onChange={e => setGender(e.target.value)}
-									className=" border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-900  focus:outline-indigo-600"
+									className="border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-900  focus:outline-indigo-600 "
 								>
 									<option value="">What is your gender?</option>
 									<option value="female">Female</option>

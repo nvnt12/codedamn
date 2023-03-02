@@ -74,9 +74,9 @@ export default function Edit_Socials(props: {
 	return (
 		<>
 			<NavBar />
-			<div className="flex p-12 justify-between">
+			<div className="flex p-12 justify-between sm:flex-wrap sm:px-3 sm:py-6 md:px-4 md:py-8 md:ml-2">
 				<SideNav />
-				<div className="w-9/12 px-20">
+				<div className="w-9/12 px-20 sm:w-full sm:mt-6 sm:px-2 md:w-full md:px-6">
 					<form
 						onSubmit={e => {
 							e.preventDefault()

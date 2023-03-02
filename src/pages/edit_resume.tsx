@@ -30,6 +30,7 @@ export const getStaticProps: GetStaticProps = async context => {
 		revalidate: 10
 	}
 }
+
 export default function Edit_Resume(props: {
 	skills: [
 		{
@@ -70,9 +71,9 @@ export default function Edit_Resume(props: {
 	return (
 		<>
 			<NavBar />
-			<div className="flex p-12 justify-between">
+			<div className="flex p-12 justify-between sm:flex-wrap sm:px-3 sm:py-6 md:px-4 md:py-8 md:ml-2">
 				<SideNav />
-				<div className="w-9/12 px-20">
+				<div className="w-9/12 px-20 sm:w-full sm:mt-6 sm:px-2 md:w-full md:px-6">
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6">
 							<h1 className="font-semibold text-xl">Education</h1>
@@ -135,7 +136,7 @@ export default function Edit_Resume(props: {
 											<h2 className="text-lg text-gray-800 font-semibold">
 												{exp.role}
 											</h2>
-											<div className="flex justify-between mb-1">
+											<div className="flex justify-between mb-1 sm:flex-col">
 												<h3 className="text-md text-gray-700 font-medium">
 													{exp.location} &bull; {exp.organisation}
 												</h3>
@@ -165,7 +166,7 @@ export default function Edit_Resume(props: {
 						</div>
 						<div className="bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 flex-col">
 							<div className="flex justify-between ">
-								<div className="pt-1 pb-1 grid grid-cols-2 w-full gap-x-14">
+								<div className="pt-1 pb-1 grid grid-cols-2 w-full gap-x-14 sm:grid-cols-1">
 									{skills.map(
 										(skill: { index: number; skill: string; rate: string }) => (
 											<div
@@ -193,14 +194,14 @@ export default function Edit_Resume(props: {
 						</div>
 					</div>
 					<div className="mb-8">
-						<div className="flex justify-between items-center mb-6">
+						<div className="flex justify-between items-center mb-6 sm:mb-4">
 							<h1 className="font-semibold text-xl">Interests</h1>
 						</div>
-						<div className="flex-col">
-							<div className="flex">
+						<div className="">
+							<div className="flex sm:flex-wrap md:flex-wrap">
 								{interests.map((interest: string) => (
 									<div
-										className="flex justify-between items-center"
+										className="flex justify-between items-center sm:mt-2 md:mt-2"
 										key={interest}
 									>
 										<div className="bg-gray-50 border-2 border-gray-100 px-3 py-1 mr-4 rounded-lg ">
@@ -223,9 +224,9 @@ export default function Edit_Resume(props: {
 						></SecondaryButton>
 						<PrimaryButton
 							value="Save changes"
-							type="submit"
+							type="button"
 							onClick={() => {
-								//do something
+								router.reload()
 							}}
 						></PrimaryButton>
 					</div>

@@ -44,7 +44,7 @@ export default function SkillModal() {
 			{showModal ? (
 				<>
 					<div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
-						<div className="relative w-3/6  mx-auto max-w-3xl">
+						<div className="relative w-5/6 mx-auto max-w-3xl sm:w-full sm:px-2 md:w-5/6 md:px-6">
 							{/*content*/}
 							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white">
 								{/*header*/}

@@ -8,7 +8,7 @@ export default function Input(props: {
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
 	return (
-		<div className="mb-3 flex flex-col">
+		<div className="mb-3 flex flex-col flex-1">
 			<label htmlFor="name" className="text-md font-medium mb-1">
 				{props.label}
 			</label>
@@ -17,7 +17,7 @@ export default function Input(props: {
 				id={props.id}
 				value={props.value}
 				onChange={props.onChange}
-				className={`border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-indigo-600 ${props.className}`}
+				className={`border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-indigo-600 sm:p-1.5 ${props.className}`}
 			/>
 			<p className="text-md font-normal text-gray-500">{props.info}</p>
 		</div>

@@ -42,14 +42,14 @@ export default function Resume(props: {
 	const experience = props.experience
 
 	return (
-		<>
-			<div className="w-8/12 h-fit mt-12 mb-12">
+		<div className="mb-12">
+			<div className="w-full h-fit mt-12 mb-12 sm:w-full sm:mt-6 sm:mb-0">
 				<div className="mb-6">
 					<h1 className="font-bold text-2xl">About me</h1>
 				</div>
 				<div>
-					<div className="flex mb-2 bg-gray-50 p-6 rounded-2xl border-2 border-gray-100 flex-col">
-						<div className="ml-2 mb-6">
+					<div className="flex bg-gray-50 p-6 sm:p-3 rounded-2xl border-2 border-gray-100 flex-col">
+						<div className="ml-2 mb-6 sm:ml-0">
 							<h2 className="text-md text-gray-900 font-medium">{about}</h2>
 						</div>
 						<div>
@@ -65,7 +65,7 @@ export default function Resume(props: {
 				</div>
 			</div>
 
-			<div className="w-8/12 h-fit mb-6">
+			<div className="w-full h-fit mb-12 sm:w-full sm:mt-6 sm:mb-6">
 				<div className="mb-6">
 					<h1 className="font-bold text-2xl">Work experience</h1>
 				</div>
@@ -82,7 +82,7 @@ export default function Resume(props: {
 							img: string
 						}) => (
 							<div
-								className="flex mb-6 bg-gray-50 p-8 rounded-2xl border-2 border-gray-100"
+								className="flex mb-6 bg-gray-50 p-8 sm:p-4 rounded-2xl border-2 border-gray-100 sm:flex-wrap"
 								key={exp.role}
 							>
 								<div className="mr-5 w-10">
@@ -91,13 +91,13 @@ export default function Resume(props: {
 										alt={'Logo'}
 										width="40"
 										height="40"
-										className="rounded-full"
+										className="rounded-full sm:mb-3"
 									/>
 								</div>
 								<div className="w-full">
 									<div className="flex flex-col mb-6">
 										<h1 className="font-semibold text-xl mb-2">{exp.role}</h1>
-										<div className="flex justify-between">
+										<div className="flex justify-between sm:flex-wrap">
 											<p className="text-md font-medium text-gray-600">
 												{exp.location} &bull; {exp.organisation}
 											</p>
@@ -116,8 +116,8 @@ export default function Resume(props: {
 				</div>
 			</div>
 
-			<div className="w-8/12 h-fit mb-12">
-				<div className="mb-8 w-full">
+			<div className="w-full h-fit mb-12 sm:w-full sm:mb-6 sm:mt-6">
+				<div className="w-full">
 					<div className="mb-6">
 						<h1 className="font-bold text-2xl">Education</h1>
 					</div>
@@ -134,7 +134,7 @@ export default function Resume(props: {
 							desc: string
 						}) => (
 							<div
-								className="flex mb-6 bg-gray-50 p-8 rounded-2xl border-2 border-gray-100"
+								className="flex mb-6 bg-gray-50 p-8 sm:p-4 rounded-2xl border-2 border-gray-100 sm:flex-wrap"
 								key={edu.degree}
 							>
 								<div className="mr-5 w-10">
@@ -143,7 +143,7 @@ export default function Resume(props: {
 										alt={'Logo'}
 										width="40"
 										height="40"
-										className="rounded-full"
+										className="rounded-full mb-3"
 									/>
 								</div>
 								<div className="w-full">
@@ -151,7 +151,7 @@ export default function Resume(props: {
 										<h1 className="font-semibold text-xl mb-2">
 											{edu.college}
 										</h1>
-										<div className="flex justify-between">
+										<div className="flex justify-between sm:flex-wrap">
 											<p className="text-md font-medium text-gray-600">
 												{edu.degree}
 											</p>
@@ -170,16 +170,16 @@ export default function Resume(props: {
 				</div>
 			</div>
 
-			<div className="w-8/12 h-fit mb-12">
-				<div className="mb-8 w-full">
-					<div className="mb-6">
+			<div className="w-full h-fit mb-12 sm:w-full sm:mb-6 sm:mt-6">
+				<div className=" w-full">
+					<div className="mb-6 sm:mb-2">
 						<h1 className="font-bold text-2xl">Tech skills</h1>
 					</div>
 				</div>
-				<div className="flex">
+				<div className="flex sm:flex-wrap">
 					{skills.map((skill: { index: number; skill: string; rate: string }) => (
 						<div className="flex justify-between items-center" key={skill.index}>
-							<div className="bg-gray-50 border-2 border-gray-100 px-3 py-1 mr-4 rounded-lg ">
+							<div className="bg-gray-50 border-2 border-gray-100 px-3 py-1 mr-4 rounded-lg mt-2">
 								<p className="text-md text-gray-900 font-semibold">{skill.skill}</p>
 							</div>
 						</div>
@@ -187,15 +187,15 @@ export default function Resume(props: {
 				</div>
 			</div>
 
-			<div className="w-8/12 h-fit mb-12">
-				<div className="mb-8 w-full">
-					<div className="mb-6">
+			<div className="w-full h-fit mb-12 sm:w-full sm:mt-6">
+				<div className="w-full">
+					<div className="mb-6 sm:mb-2">
 						<h1 className="font-bold text-2xl">Interests</h1>
 					</div>
-					<div className="flex">
+					<div className="flex sm:flex-wrap">
 						{interests.map((interest: string) => (
 							<div className="flex justify-between items-center" key={interest}>
-								<div className="bg-gray-50 border-2 border-gray-100 px-3 py-1 mr-4 rounded-lg ">
+								<div className="bg-gray-50 border-2 border-gray-100 px-3 py-1 mr-4 rounded-lg mt-2">
 									<p className="text-md text-gray-900 font-semibold">
 										{interest}
 									</p>
@@ -205,6 +205,6 @@ export default function Resume(props: {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
