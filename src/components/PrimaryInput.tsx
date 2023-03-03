@@ -17,7 +17,7 @@ export default function Input(props: {
 				id={props.id}
 				value={props.value}
 				onChange={props.onChange}
-				className={`border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-indigo-600 sm:p-1.5 ${props.className}`}
+				className={`border-2 border-gray-100 p-2.5 rounded-md mb-2 focus:outline-indigo-600 sm:pl-2.5 ${props.className}`}
 			/>
 			<p className="text-md font-normal text-gray-500">{props.info}</p>
 		</div>

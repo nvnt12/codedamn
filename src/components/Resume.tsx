@@ -87,7 +87,7 @@ export default function Resume(props: {
 							>
 								<div className="mr-5 w-10">
 									<Image
-										src={exp.img || '/facebook-icon.png'}
+										src={exp.img || '/facebook-icon.svg'}
 										alt={'Logo'}
 										width="40"
 										height="40"
@@ -172,7 +172,7 @@ export default function Resume(props: {
 
 			<div className="w-full h-fit mb-12 sm:w-full sm:mb-6 sm:mt-6">
 				<div className=" w-full">
-					<div className="mb-6 sm:mb-2">
+					<div className="mb-2 sm:mb-2">
 						<h1 className="font-bold text-2xl">Tech skills</h1>
 					</div>
 				</div>
@@ -189,7 +189,7 @@ export default function Resume(props: {
 
 			<div className="w-full h-fit mb-12 sm:w-full sm:mt-6">
 				<div className="w-full">
-					<div className="mb-6 sm:mb-2">
+					<div className="mb-2 sm:mb-2">
 						<h1 className="font-bold text-2xl">Interests</h1>
 					</div>
 					<div className="flex sm:flex-wrap">

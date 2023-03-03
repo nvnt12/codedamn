@@ -25,7 +25,9 @@ export const getStaticProps: GetStaticProps = async context => {
 		gender: user?.gender,
 		allowFollowers: user?.allowFollowers,
 		allowXp: user?.allowXp,
-		allowBadge: user?.allowBadge
+		allowBadge: user?.allowBadge,
+		institute: user?.institute,
+		location: user?.location
 	}
 	return {
 		props: props,
@@ -37,6 +39,8 @@ export default function Edit_Profile(props: {
 	id: string
 	name: string
 	about: string
+	location: string
+	institute: string
 	profession: string
 	dob: string
 	gender: string
@@ -47,6 +51,8 @@ export default function Edit_Profile(props: {
 	const id = props.id as string
 	const [name, setName] = useState<string>(props.name)
 	const [about, setAbout] = useState<string>(props.about)
+	const [institute, setInstitute] = useState<string>(props.institute)
+	const [location, setLocation] = useState<string>(props.location)
 	const [profession, setProfession] = useState<string>(props.profession)
 	const [dob, setDob] = useState<string>(props.dob)
 	const [gender, setGender] = useState<string>(props.gender)
@@ -62,7 +68,9 @@ export default function Edit_Profile(props: {
 		gender,
 		allowFollowers,
 		allowXp,
-		allowBadge
+		allowBadge,
+		location,
+		institute
 	})
 	const router = useRouter()
 
@@ -76,7 +84,9 @@ export default function Edit_Profile(props: {
 			gender,
 			allowFollowers,
 			allowXp,
-			allowBadge
+			allowBadge,
+			location,
+			institute
 		})
 		const res = await fetch('/api/updateUser', {
 			method: 'POST',
@@ -135,7 +145,7 @@ export default function Edit_Profile(props: {
 								}}
 							/>
 
-							<div className="mb-6 flex flex-col">
+							<div className="mb-3 flex flex-col">
 								<label htmlFor="about" className="text-md font-medium mb-1">
 									About
 								</label>
@@ -156,6 +166,28 @@ export default function Edit_Profile(props: {
 								className=""
 								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 									setProfession(e.target.value)
+								}}
+							></Input>
+							<Input
+								label="Institute"
+								type="text"
+								id="institute"
+								value={institute}
+								info=""
+								className=""
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+									setInstitute(e.target.value)
+								}}
+							></Input>
+							<Input
+								label="Location"
+								type="text"
+								id="location"
+								value={location}
+								info=""
+								className=""
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+									setLocation(e.target.value)
 								}}
 							></Input>
 							<Input

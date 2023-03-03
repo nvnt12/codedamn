@@ -10,7 +10,7 @@ export default function Card(props: {
 	lang: string
 	date: string
 }) {
-	const [type, setType] = useState<string>(props.type)
+	const type: string = props.type
 
 	if (type == 'playground') {
 		return (

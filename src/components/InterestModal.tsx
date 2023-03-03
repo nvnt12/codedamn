@@ -1,62 +1,100 @@
-import React, { useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
 import PrimaryButton from './PrimaryButton'
 import Input from './PrimaryInput'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
 
-export default function InterestModal() {
-	const [showModal, setShowModal] = useState<boolean>(false)
+export default function InterestModal({ handleInterest }) {
+	const [isOpen, setIsOpen] = useState(false)
+	const [interest, setInterest] = useState<string>('')
+
+	function closeModal() {
+		setIsOpen(false)
+	}
+
+	function openModal() {
+		setIsOpen(true)
+	}
+
 	return (
 		<>
-			<TertiaryButton
-				type="button"
-				value="Add Interest"
-				onClick={() => setShowModal(true)}
-			></TertiaryButton>
-			{showModal ? (
-				<>
-					<div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
-						<div className="relative w-3/6  mx-auto max-w-3xl">
-							{/*content*/}
-							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white">
-								{/*header*/}
-								<div className="flex items-start justify-center p-4 rounded-t outline-none hover:outline-none">
-									<h3 className="text-xl font-semibold">Add Interest</h3>
-								</div>
-								{/*body*/}
-								<div className="relative py-6 px-6 flex-auto">
-									<form className="w-full relative flex-auto" action="">
-										<Input
-											type="text"
-											label="Interest"
-											id=""
-											className=""
-											info=""
-											value=""
-											onChange={e => e.preventDefault()}
-										/>
+			<TertiaryButton type="button" value="Add Interest" onClick={openModal}></TertiaryButton>
 
-										<div className="flex items-center justify-end rounded-b">
-											<SecondaryButton
-												type="button"
-												value="Cancel"
-												onClick={() => setShowModal(false)}
+			<Transition appear show={isOpen} as={Fragment}>
+				<Dialog as="div" className="relative z-10" onClose={closeModal}>
+					<Transition.Child
+						as={Fragment}
+						enter="ease-out duration-300"
+						enterFrom="opacity-0"
+						enterTo="opacity-100"
+						leave="ease-in duration-200"
+						leaveFrom="opacity-100"
+						leaveTo="opacity-0"
+					>
+						<div className="fixed inset-0 bg-black bg-opacity-25" />
+					</Transition.Child>
+
+					<div className="fixed inset-0 overflow-y-auto">
+						<div className="flex min-h-full items-center justify-center p-2 text-center">
+							<Transition.Child
+								as={Fragment}
+								enter="ease-out duration-300"
+								enterFrom="opacity-0 scale-95"
+								enterTo="opacity-100 scale-100"
+								leave="ease-in duration-200"
+								leaveFrom="opacity-100 scale-100"
+								leaveTo="opacity-0 scale-95"
+							>
+								<Dialog.Panel className="w-8/12 mx-auto max-w-3xl sm:w-full sm:px-2 md:w-10/12 md:px-6 sm:h-5/6 rounded-xl bg-white p-2 text-left align-middle shadow-xl transition-all">
+									<div className="flex items-start justify-center p-3 rounded-t">
+										<h3 className="text-xl font-semibold">Add Education</h3>
+									</div>
+
+									<div className="relative py-6 px-6 flex-auto">
+										<form
+											className="w-full relative flex-auto"
+											onSubmit={e => {
+												e.preventDefault()
+												setIsOpen(false)
+												handleInterest(interest)
+												setInterest('')
+											}}
+										>
+											<Input
+												type="text"
+												label="Interest"
+												id=""
+												className=""
+												info=""
+												value={interest}
+												onChange={e => {
+													setInterest(e.target.value)
+												}}
 											/>
-											<PrimaryButton
-												type="button"
-												value="Save"
-												onClick={() => setShowModal(false)}
-											></PrimaryButton>
-										</div>
-									</form>
-								</div>
-								{/*footer*/}
-							</div>
+
+											<div className="flex items-center justify-end rounded-b">
+												<SecondaryButton
+													type="button"
+													value="Cancel"
+													onClick={() => setIsOpen(false)}
+												/>
+												<PrimaryButton
+													type="submit"
+													value="Save"
+													onClick={() => {
+														//do something
+													}}
+												></PrimaryButton>
+											</div>
+										</form>
+									</div>
+								</Dialog.Panel>
+							</Transition.Child>
 						</div>
 					</div>
-					<div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-				</>
-			) : null}
+				</Dialog>
+			</Transition>
 		</>
 	)
 }

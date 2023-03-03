@@ -16,6 +16,7 @@ export default async function Database(req: NextApiRequest, res: NextApiResponse
 			location: reqUser.location,
 			about: reqUser.about,
 			dob: reqUser.dob,
+			institute: reqUser.institute,
 			gender: reqUser.gender,
 			allowFollowers: reqUser.allowFollowers,
 			allowBadge: reqUser.allowBadge,
@@ -26,17 +27,14 @@ export default async function Database(req: NextApiRequest, res: NextApiResponse
 			facebook: reqUser.facebook,
 			behance: reqUser.behance,
 			dribbble: reqUser.dribbble,
-			education: [
-				{
-					degree: reqUser.degree,
-					college: reqUser.college,
-					start: reqUser.start,
-					end: reqUser.end,
-					desc: reqUser.desc
-				}
-			]
+			interests: reqUser.interests,
+			playgrounds: reqUser.playgrounds,
+			projects: reqUser.projects,
+			education: reqUser.education,
+			experience: reqUser.experience
 		}
 	)
+
 	if (update) {
 		res.status(200).send(update)
 	}

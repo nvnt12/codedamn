@@ -11,6 +11,7 @@ import Users from '../model/Users'
 import mongoose from 'mongoose'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import InterestModal from '../components/InterestModal'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
@@ -34,7 +35,6 @@ export const getStaticProps: GetStaticProps = async context => {
 export default function Edit_Resume(props: {
 	skills: [
 		{
-			index: number
 			skill: string
 			rate: string
 		}
@@ -42,7 +42,6 @@ export default function Edit_Resume(props: {
 	interests: string[]
 	education: [
 		{
-			index: number
 			degree: string
 			college: string
 			start: string
@@ -52,7 +51,6 @@ export default function Edit_Resume(props: {
 	]
 	experience: [
 		{
-			index: number
 			role: string
 			location: string
 			start: string
@@ -62,11 +60,98 @@ export default function Edit_Resume(props: {
 		}
 	]
 }) {
-	const [skills, setSkills] = useState(props.skills)
-	const interests = props.interests
-	const [education, setEducation] = useState(props.education)
-	const [experience, setExperience] = useState(props.experience)
+	const [skills, setSkills] = useState<
+		{
+			skill: string
+			rate: string
+		}[]
+	>(props.skills)
+	const [interests, setInterests] = useState<string[]>(props.interests)
+	const [education, setEducation] = useState<
+		{
+			degree: string
+			college: string
+			start: string
+			end: string
+			desc: string
+		}[]
+	>(props.education)
+	const [experience, setExperience] = useState<
+		{
+			role: string
+			location: string
+			start: string
+			end: string
+			desc: string
+			organisation: string
+		}[]
+	>(props.experience)
 	const router = useRouter()
+
+	async function handleEducation(
+		degree: string,
+		college: string,
+		start: string,
+		end: string,
+		desc: string
+	) {
+		setEducation([
+			...education,
+			{
+				degree,
+				college,
+				start,
+				end,
+				desc
+			}
+		])
+	}
+
+	async function handleExperience(
+		role: string,
+		location: string,
+		start: string,
+		end: string,
+		desc: string,
+		organisation: string
+	) {
+		setExperience([
+			...experience,
+			{
+				role,
+				location,
+				start,
+				end,
+				desc,
+				organisation
+			}
+		])
+	}
+
+	async function handleSkill(skill: string, rate: string) {
+		setSkills([
+			...skills,
+			{
+				skill,
+				rate
+			}
+		])
+	}
+
+	async function handleInterest(interest: string) {
+		setInterests([...interests, interest])
+		console.log(interests)
+	}
+
+	async function handleSubmit() {
+		const res = await fetch('/api/updateUser', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({ education, experience, skills, interests })
+		})
+	}
 
 	return (
 		<>
@@ -77,12 +162,11 @@ export default function Edit_Resume(props: {
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6">
 							<h1 className="font-semibold text-xl">Education</h1>
-							<EducationModal education={education} />
+							<EducationModal handleEducation={handleEducation} />
 						</div>
 						<div className="bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 flex  flex-col justify-between">
 							{education.map(
 								(edu: {
-									index: number
 									degree: string
 									college: string
 									start: string
@@ -118,12 +202,11 @@ export default function Edit_Resume(props: {
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6">
 							<h1 className="font-semibold text-xl">Work Experience</h1>
-							<ExperienceModal experience={experience} />
+							<ExperienceModal handleExperience={handleExperience} />
 						</div>
 						<div className="bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 flex  flex-col justify-between">
 							{experience.map(
 								(exp: {
-									index: number
 									role: string
 									location: string
 									start: string
@@ -162,33 +245,31 @@ export default function Edit_Resume(props: {
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6">
 							<h1 className="font-semibold text-xl">Skills</h1>
-							<SkillModal />
+							<SkillModal handleSkill={handleSkill} />
 						</div>
 						<div className="bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 flex-col">
 							<div className="flex justify-between ">
 								<div className="pt-1 pb-1 grid grid-cols-2 w-full gap-x-14 sm:grid-cols-1">
-									{skills.map(
-										(skill: { index: number; skill: string; rate: string }) => (
-											<div
-												key={skill.skill}
-												className="flex shrink mb-4 justify-between items-center"
-											>
-												<div className="pr-4 pl-4 pt-1 pb-1 rounded-md mr-3 ">
-													<p className="text-md text-gray-800 font-semibold">
-														{skill.skill}
-													</p>
-													<p className="text-sm text-gray-500">
-														{skill.rate}
-													</p>
-												</div>
-												<div className="mt-1 mr-4">
-													<button>
-														<BiTrashAlt className="h-6 w-6 fill-gray-500" />
-													</button>
-												</div>
+									{skills.map((skill: { skill: string; rate: string }) => (
+										<div
+											key={skill.skill}
+											className="flex shrink mb-4 justify-between items-center"
+										>
+											<div className="pr-4 pl-4 pt-1 pb-1 rounded-md mr-3 ">
+												<p className="text-md text-gray-800 font-semibold">
+													{skill.skill}
+												</p>
+												<p className="text-sm text-gray-500">
+													{skill.rate}
+												</p>
 											</div>
-										)
-									)}
+											<div className="mt-1 mr-4">
+												<button>
+													<BiTrashAlt className="h-6 w-6 fill-gray-500" />
+												</button>
+											</div>
+										</div>
+									))}
 								</div>
 							</div>
 						</div>
@@ -196,12 +277,13 @@ export default function Edit_Resume(props: {
 					<div className="mb-8">
 						<div className="flex justify-between items-center mb-6 sm:mb-4">
 							<h1 className="font-semibold text-xl">Interests</h1>
+							<InterestModal handleInterest={handleInterest} />
 						</div>
 						<div className="">
-							<div className="flex sm:flex-wrap md:flex-wrap">
+							<div className="flex flex-wrap">
 								{interests.map((interest: string) => (
 									<div
-										className="flex justify-between items-center sm:mt-2 md:mt-2"
+										className="flex justify-between items-center mt-2"
 										key={interest}
 									>
 										<div className="bg-gray-50 border-2 border-gray-100 px-3 py-1 mr-4 rounded-lg ">
@@ -226,7 +308,7 @@ export default function Edit_Resume(props: {
 							value="Save changes"
 							type="button"
 							onClick={() => {
-								router.reload()
+								handleSubmit()
 							}}
 						></PrimaryButton>
 					</div>

@@ -6,7 +6,7 @@ import Card from '../components/Card'
 import mongoose from 'mongoose'
 import { GetStaticProps } from 'next'
 import Users from '../model/Users'
-import { useState } from 'react'
+import { MouseEventHandler, useState } from 'react'
 import { useRouter } from 'next/router'
 
 export const getStaticProps: GetStaticProps = async context => {
@@ -14,11 +14,12 @@ export const getStaticProps: GetStaticProps = async context => {
 
 	const user = await Users.findById(process.env.USER_ID).lean()
 
-	const props = {
+	const prop = JSON.stringify({
 		id: user?.id,
 		projects: user?.projects,
 		playgrounds: user?.playgrounds
-	}
+	})
+	const props = JSON.parse(prop)
 
 	return {
 		props: props,
@@ -27,9 +28,9 @@ export const getStaticProps: GetStaticProps = async context => {
 }
 
 export default function Edit_Porfolio(props: {
+	id: string
 	playgrounds: [
 		{
-			index: number
 			title: string
 			type: string
 			src: string
@@ -41,7 +42,6 @@ export default function Edit_Porfolio(props: {
 	]
 	projects: [
 		{
-			index: number
 			title: string
 			type: string
 			src: string
@@ -52,10 +52,69 @@ export default function Edit_Porfolio(props: {
 		}
 	]
 }) {
-	const [projects, setProjects] = useState(props.projects)
-	const [playgrounds, setPlaygrounds] = useState(props.playgrounds)
+	const [projects, setProjects] = useState<
+		{
+			title: string
+			type: string
+			src: string
+			alt: string
+			selected: boolean
+			language: string
+			date: string
+		}[]
+	>(props.projects)
+	const [playgrounds, setPlaygrounds] = useState<
+		{
+			title: string
+			type: string
+			src: string
+			alt: string
+			selected: boolean
+			language: string
+			date: string
+		}[]
+	>(props.playgrounds)
 	const router = useRouter()
+	const id: string = props.id
 
+	async function handleSubmit() {
+		const res = await fetch('/api/updateUser', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({ id, playgrounds, projects })
+		})
+	}
+
+	function handleClick(item: {
+		title: string
+		type: string
+		src: string
+		alt: string
+		selected: boolean
+		language: string
+		date: string
+	}) {
+		if (item.type == 'playground') {
+			setPlaygrounds(
+				playgrounds.map(pg =>
+					pg.title == item.title
+						? { ...item, selected: item.selected ? false : true }
+						: pg
+				)
+			)
+		}
+		if (item.type == 'project') {
+			setProjects(
+				projects.map(pj =>
+					pj.title == item.title
+						? { ...item, selected: item.selected ? false : true }
+						: pj
+				)
+			)
+		}
+	}
 	return (
 		<>
 			<NavBar />
@@ -69,7 +128,6 @@ export default function Edit_Porfolio(props: {
 						<div className="grid grid-cols-2 gap-4 sm:grid-cols-1 sm:gap-3">
 							{playgrounds.map(
 								(playground: {
-									index: number
 									title: string
 									type: string
 									src: string
@@ -79,22 +137,27 @@ export default function Edit_Porfolio(props: {
 									date: string
 								}) => (
 									<div
-										key={playground.index}
+										key={playground.title}
 										className={`${
 											playground.selected == true
-												? 'rounded-lg border border-indigo-600'
+												? 'rounded-lg border-2 border-indigo-400'
 												: 'rounded-lg border-2 border-gray-100'
 										} `}
+										onClick={() => {
+											handleClick(playground)
+										}}
 									>
-										<Card
-											type={playground.type}
-											src={playground.src}
-											alt={playground.alt}
-											title={playground.title}
-											lang={playground.language}
-											date={playground.date}
-											selected={playground.selected}
-										/>
+										<div>
+											<Card
+												type={playground.type}
+												src={playground.src}
+												alt={playground.alt}
+												title={playground.title}
+												lang={playground.language}
+												date={playground.date}
+												selected={playground.selected}
+											/>
+										</div>
 									</div>
 								)
 							)}
@@ -107,7 +170,6 @@ export default function Edit_Porfolio(props: {
 						<div className="grid grid-cols-2 gap-4  sm:grid-cols-1 sm:gap-3">
 							{projects.map(
 								(project: {
-									index: number
 									title: string
 									type: string
 									src: string
@@ -117,12 +179,15 @@ export default function Edit_Porfolio(props: {
 									date: string
 								}) => (
 									<div
-										key={project.index}
+										key={project.title}
 										className={`${
 											project.selected == true
-												? 'rounded-lg border border-indigo-600'
+												? 'rounded-lg border-2 border-indigo-400'
 												: 'rounded-lg border-2 border-gray-100'
 										} `}
+										onClick={() => {
+											handleClick(project)
+										}}
 									>
 										<Card
 											type={project.type}
@@ -149,9 +214,9 @@ export default function Edit_Porfolio(props: {
 						></SecondaryButton>
 						<PrimaryButton
 							value="Save changes"
-							type="submit"
+							type="button"
 							onClick={() => {
-								//save changes
+								handleSubmit()
 							}}
 						></PrimaryButton>
 					</div>

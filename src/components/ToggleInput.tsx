@@ -13,7 +13,11 @@ export default function Toggle(props: {
 
 	return (
 		<div className="relative flex items-center justify-between mb-5">
-			<div>
+			<div
+				onClick={() => {
+					setEnabled(!enabled)
+				}}
+			>
 				<label htmlFor="achievements" className="text-lg font-bold mb-1">
 					{props.label}
 				</label>

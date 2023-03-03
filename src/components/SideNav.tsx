@@ -9,7 +9,10 @@ export default function SideNav() {
 	return (
 		<>
 			<div className="w-72 h-fit rounded-2xl bg-gray-50 border-2 border-gray-100 sm:w-full sm:mt-2 md:w-fit md:pr-4">
-				<div className="flex items-center mb-5 mt-5">
+				<Link
+					className="flex items-center mb-5 mt-5 hover:bg-gray-50"
+					href={'/edit_profile'}
+				>
 					<div
 						className={`${
 							current == '/edit_profile'
@@ -25,18 +28,17 @@ export default function SideNav() {
 						} `}
 						href={'/edit_portfolio'}
 					/>
-					<Link
+					<div
 						className={`${
 							current == '/edit_profile'
 								? 'p-2 text-lg font-medium text-gray-900'
 								: 'p-2 text-lg font-medium text-gray-400'
 						} `}
-						href={'/edit_profile'}
 					>
 						Profile
-					</Link>
-				</div>
-				<div className="flex items-center mb-5 mt-5">
+					</div>
+				</Link>
+				<Link className="flex items-center mb-5 mt-5" href={'/edit_socials'}>
 					<div
 						className={`${
 							current == '/edit_socials'
@@ -52,18 +54,17 @@ export default function SideNav() {
 						} `}
 						href={'/edit_portfolio'}
 					/>
-					<Link
+					<div
 						className={`${
 							current == '/edit_socials'
 								? 'p-2 text-lg font-medium text-gray-900'
 								: 'p-2 text-lg font-medium text-gray-400'
 						} `}
-						href={'/edit_socials'}
 					>
 						Socials
-					</Link>
-				</div>
-				<div className="flex items-center mb-5 mt-5">
+					</div>
+				</Link>
+				<Link className="flex items-center mb-5 mt-5" href={'/edit_portfolio'}>
 					<div
 						className={`${
 							current == '/edit_portfolio'
@@ -79,18 +80,17 @@ export default function SideNav() {
 						} `}
 						href={'/edit_portfolio'}
 					/>
-					<Link
+					<div
 						className={`${
 							current == '/edit_portfolio'
 								? 'p-2 text-lg font-medium text-gray-900'
 								: 'p-2 text-lg font-medium text-gray-400'
 						} `}
-						href={'/edit_portfolio'}
 					>
 						Portfolio
-					</Link>
-				</div>
-				<div className="flex items-center mb-5 mt-5">
+					</div>
+				</Link>
+				<Link className="flex items-center mb-5 mt-5" href={'/edit_resume'}>
 					<div
 						className={`${
 							current == '/edit_resume'
@@ -106,17 +106,16 @@ export default function SideNav() {
 						} `}
 						href={'/edit_portfolio'}
 					/>
-					<Link
+					<div
 						className={`${
 							current == '/edit_resume'
 								? 'p-2 text-lg font-medium text-gray-900'
 								: 'p-2 text-lg font-medium text-gray-400'
 						} `}
-						href={'/edit_resume'}
 					>
 						Resume
-					</Link>
-				</div>
+					</div>
+				</Link>
 			</div>
 		</>
 	)

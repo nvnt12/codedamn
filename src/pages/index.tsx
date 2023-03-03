@@ -165,7 +165,7 @@ export default function Home(props: {
 						<div className="pl-6 w-full sm:pl-0 md:pl-2">
 							<div className="flex items-center mb-2 sm:flex-wrap sm:pl-2 md:flex-wrap flex-wrap">
 								<h1 className="text-3xl font-bold mr-3">{name}</h1>
-								<p className="bg-lime-300 pr-2 pl-2 rounded-md text-md font-semibold mr-3 sm:mt-1">
+								<p className="bg-lime-300 text-lime-900 pr-2 pl-2 rounded-md text-md font-semibold mr-3 sm:mt-1">
 									Pro
 								</p>
 								<p className="bg-sky-100 pr-2 pl-2 rounded-md text-md font-semibold text-sky-800 sm:mt-1 md:mt-1">
@@ -201,70 +201,82 @@ export default function Home(props: {
 							<div className="flex justify-between pt-10 pb-4 border-t-2 border-gray-100 sm:pt-3 sm:pb-0 sm:flex-wrap items-center">
 								<div className="flex flex-wrap sm:mt-1 sm:pl-2">
 									{github && (
-										<Link href={github}>
-											<Image
-												src="/github.svg"
-												alt="Github-icon"
-												width="40"
-												height="40"
-												className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 fill-cyan-600 mr-4"
-											/>
+										<Link legacyBehavior href={github}>
+											<a target="_blank" rel="noopener noreferrer">
+												<Image
+													src="/github.svg"
+													alt="Github-icon"
+													width="40"
+													height="40"
+													className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 fill-cyan-600 mr-4"
+												/>
+											</a>
 										</Link>
 									)}
 									{youtube && (
-										<Link href={youtube}>
-											<Image
-												src="/youtube-icon.svg"
-												alt="Youtube-icon"
-												width="40"
-												height="40"
-												className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 fill-cyan-600 mr-4"
-											/>
+										<Link legacyBehavior href={youtube}>
+											<a target="_blank" rel="noopener noreferrer">
+												<Image
+													src="/youtube-icon.svg"
+													alt="Youtube-icon"
+													width="40"
+													height="40"
+													className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 fill-cyan-600 mr-4"
+												/>
+											</a>
 										</Link>
 									)}
 
 									{instagram && (
-										<Link href="/">
-											<Image
-												src="/instagram-icon.svg"
-												alt="instagram-icon"
-												width="40"
-												height="40"
-												className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4"
-											/>
+										<Link legacyBehavior href="/">
+											<a target="_blank" rel="noopener noreferrer">
+												<Image
+													src="/instagram-icon.svg"
+													alt="instagram-icon"
+													width="40"
+													height="40"
+													className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4"
+												/>
+											</a>
 										</Link>
 									)}
 									{behance && (
-										<Link href="/">
-											<Image
-												src="/behance-icon.svg"
-												alt="behance-icon"
-												width="40"
-												height="40"
-												className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4"
-											/>
+										<Link legacyBehavior href="/">
+											<a target="_blank" rel="noopener noreferrer">
+												<Image
+													src="/behance-icon.svg"
+													alt="behance-icon"
+													width="40"
+													height="40"
+													className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4"
+												/>
+											</a>
 										</Link>
 									)}
 									{dribbble && (
-										<Link href="/">
-											<Image
-												src="/dribbble-icon.svg"
-												alt="dribbble-icon"
-												width="40"
-												height="40"
-												className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4"
-											/>
+										<Link legacyBehavior href="/">
+											<a target="_blank" rel="noopener noreferrer">
+												<Image
+													src="/dribbble-icon.svg"
+													alt="dribbble-icon"
+													width="40"
+													height="40"
+													className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4"
+												/>
+											</a>
 										</Link>
 									)}
 									{facebook && (
-										<Link href="/">
-											<Image
-												src="/facebook-icon.svg"
-												alt="facebook-icon"
-												width="40"
-												height="40"
-												className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4"
-											/>
+										<Link legacyBehavior href="/">
+											<a target="_blank" rel="noopener noreferrer">
+												<Image
+													src="/facebook-icon.svg"
+													alt="facebook-icon"
+													width="40"
+													height="40"
+													className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4"
+												/>
+											</a>
 										</Link>
 									)}
 								</div>

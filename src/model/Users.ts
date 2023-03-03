@@ -7,7 +7,12 @@ const userSchema = new Schema({
 	username: String,
 	profession: String,
 	institute: String,
-	skills: String,
+	skills: [
+		{
+			skill: { type: String },
+			rate: { type: String }
+		}
+	],
 	location: String,
 	about: String,
 	dob: String,
@@ -41,7 +46,30 @@ const userSchema = new Schema({
 			desc: { type: String },
 			organisation: { type: String }
 		}
-	]
+	],
+	playgrounds: [
+		{
+			title: { type: String },
+			type: { type: String },
+			src: { type: String },
+			alt: { type: String },
+			selected: { type: Boolean },
+			language: { type: String },
+			date: { type: String }
+		}
+	],
+	projects: [
+		{
+			title: { type: String },
+			type: { type: String },
+			src: { type: String },
+			alt: { type: String },
+			selected: { type: Boolean },
+			language: { type: String },
+			date: { type: String }
+		}
+	],
+	interests: [{ type: String }]
 })
 
 export default mongoose.models?.Users || mongoose.model('Users', userSchema)

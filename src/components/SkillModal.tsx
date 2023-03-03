@@ -1,8 +1,8 @@
-import React from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
 import PrimaryButton from './PrimaryButton'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
-import Dropdown from './Dropdown'
 
 const techStack: {
 	id: number
@@ -23,7 +23,7 @@ const techStack: {
 	{ id: 13, name: 'Solidity' }
 ]
 
-const rate: {
+const rating: {
 	id: number
 	name: string
 }[] = [
@@ -32,54 +32,132 @@ const rate: {
 	{ id: 3, name: 'Advance' }
 ]
 
-export default function SkillModal() {
-	const [showModal, setShowModal] = React.useState(false)
+export default function SkillModal({ handleSkill }) {
+	const [isOpen, setIsOpen] = useState(false)
+	const [skill, setSkill] = useState<string>('')
+	const [rate, setRate] = useState<string>('')
+
+	function closeModal() {
+		setIsOpen(false)
+	}
+
+	function openModal() {
+		setIsOpen(true)
+	}
+
 	return (
 		<>
-			<TertiaryButton
-				type="button"
-				value="Add Skill"
-				onClick={() => setShowModal(true)}
-			></TertiaryButton>
-			{showModal ? (
-				<>
-					<div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
-						<div className="relative w-5/6 mx-auto max-w-3xl sm:w-full sm:px-2 md:w-5/6 md:px-6">
-							{/*content*/}
-							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white">
-								{/*header*/}
-								<div className="flex items-start justify-center p-4 rounded-t outline-none hover:outline-none">
-									<h3 className="text-xl font-semibold">Add Skill</h3>
-								</div>
-								{/*body*/}
-								<div className="relative py-6 px-6 flex-auto">
-									<form className="w-full relative flex-auto" action="">
-										<Dropdown label="Skill" items={techStack} />
-										<Dropdown
-											label="How would you rate yourself on this?"
-											items={rate}
-										/>
-										<div className="flex items-center justify-end rounded-b">
-											<SecondaryButton
-												type="button"
-												value="Cancel"
-												onClick={() => setShowModal(false)}
-											/>
-											<PrimaryButton
-												type="button"
-												value="Save"
-												onClick={() => setShowModal(false)}
-											></PrimaryButton>
-										</div>
-									</form>
-								</div>
-								{/*footer*/}
-							</div>
+			<TertiaryButton type="button" value="Add Skill" onClick={openModal}></TertiaryButton>
+
+			<Transition appear show={isOpen} as={Fragment}>
+				<Dialog as="div" className="relative z-10" onClose={closeModal}>
+					<Transition.Child
+						as={Fragment}
+						enter="ease-out duration-300"
+						enterFrom="opacity-0"
+						enterTo="opacity-100"
+						leave="ease-in duration-200"
+						leaveFrom="opacity-100"
+						leaveTo="opacity-0"
+					>
+						<div className="fixed inset-0 bg-black bg-opacity-25" />
+					</Transition.Child>
+
+					<div className="fixed inset-0 overflow-y-auto">
+						<div className="flex min-h-full items-center justify-center p-2 text-center">
+							<Transition.Child
+								as={Fragment}
+								enter="ease-out duration-300"
+								enterFrom="opacity-0 scale-95"
+								enterTo="opacity-100 scale-100"
+								leave="ease-in duration-200"
+								leaveFrom="opacity-100 scale-100"
+								leaveTo="opacity-0 scale-95"
+							>
+								<Dialog.Panel className="w-8/12 mx-auto max-w-3xl sm:w-full sm:px-2 md:w-10/12 md:px-6 sm:h-5/6 rounded-xl bg-white p-2 text-left align-middle shadow-xl transition-all">
+									<div className="flex items-start justify-center p-3 rounded-t">
+										<h3 className="text-xl font-semibold">Add Education</h3>
+									</div>
+
+									<div className="relative py-6 px-6 flex-auto">
+										<form
+											className="w-full relative flex-auto"
+											onSubmit={e => {
+												e.preventDefault()
+												handleSkill(skill, rate)
+												setIsOpen(false)
+												setSkill('')
+												setRate('')
+											}}
+										>
+											<div className="mb-6 flex flex-col">
+												<label
+													htmlFor="skill"
+													className="text-md font-medium mb-1"
+												>
+													Skill
+												</label>
+												<select
+													name="skill"
+													id="skill"
+													value={skill}
+													onChange={e => {
+														setSkill(e.target.value)
+													}}
+													className="border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-900  focus:outline-indigo-600 "
+												>
+													{techStack.map((item: { name: string }) => (
+														<option value={item.name} key={item.name}>
+															{item.name}
+														</option>
+													))}
+												</select>
+											</div>
+											<div className="mb-6 flex flex-col">
+												<label
+													htmlFor="rate"
+													className="text-md font-medium mb-1"
+												>
+													How would you rate yourself on this?
+												</label>
+												<select
+													name="rate"
+													id="rate"
+													value={rate}
+													onChange={e => {
+														setRate(e.target.value)
+													}}
+													className="border-2 border-gray-100 p-2.5 rounded-md mb-2 text-gray-900  focus:outline-indigo-600 "
+												>
+													{rating.map((item: { name: string }) => (
+														<option value={item.name} key={item.name}>
+															{item.name}
+														</option>
+													))}
+												</select>
+											</div>
+											<div className="flex items-center justify-end rounded-b">
+												<SecondaryButton
+													type="button"
+													value="Cancel"
+													onClick={() => setIsOpen(false)}
+												/>
+												<PrimaryButton
+													type="submit"
+													value="Save"
+													onClick={() => {
+														//do something
+													}}
+												></PrimaryButton>
+											</div>
+										</form>
+									</div>
+								</Dialog.Panel>
+							</Transition.Child>
 						</div>
 					</div>
-					<div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-				</>
-			) : null}
+				</Dialog>
+			</Transition>
 		</>
 	)
 }
