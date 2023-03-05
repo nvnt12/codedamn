@@ -7,6 +7,7 @@ const userSchema = new Schema({
 	username: String,
 	profession: String,
 	institute: String,
+	cover: String,
 	skills: [
 		{
 			skill: { type: String },

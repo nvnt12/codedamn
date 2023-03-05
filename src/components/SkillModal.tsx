@@ -32,7 +32,11 @@ const rating: {
 	{ id: 3, name: 'Advance' }
 ]
 
-export default function SkillModal({ handleSkill }) {
+export default function SkillModal({
+	handleSkill
+}: {
+	handleSkill(skill: string, rate: string): void
+}) {
 	const [isOpen, setIsOpen] = useState(false)
 	const [skill, setSkill] = useState<string>('')
 	const [rate, setRate] = useState<string>('')
@@ -74,12 +78,12 @@ export default function SkillModal({ handleSkill }) {
 								leaveFrom="opacity-100 scale-100"
 								leaveTo="opacity-0 scale-95"
 							>
-								<Dialog.Panel className="w-8/12 mx-auto max-w-3xl sm:w-full sm:px-2 md:w-10/12 md:px-6 sm:h-5/6 rounded-xl bg-white p-2 text-left align-middle shadow-xl transition-all">
-									<div className="flex items-start justify-center p-3 rounded-t">
-										<h3 className="text-xl font-semibold">Add Education</h3>
+								<Dialog.Panel className="w-8/12 mx-auto max-w-3xl sm:w-full sm:px-3 md:w-10/12 md:px-6 sm:h-5/6 rounded-xl bg-zinc-50 p-6 text-left align-middle shadow-xl transition-all">
+									<div className="flex items-start justify-start p-3 rounded-t">
+										<h3 className="text-2xl font-semibold ml-1">Add Skill</h3>
 									</div>
 
-									<div className="relative py-6 px-6 flex-auto">
+									<div className="relative py-2 px-4 flex-auto">
 										<form
 											className="w-full relative flex-auto"
 											onSubmit={e => {
@@ -93,7 +97,7 @@ export default function SkillModal({ handleSkill }) {
 											<div className="mb-6 flex flex-col">
 												<label
 													htmlFor="skill"
-													className="text-md font-medium mb-1"
+													className="text-md text-gray-900 font-medium mb-1"
 												>
 													Skill
 												</label>
@@ -116,7 +120,7 @@ export default function SkillModal({ handleSkill }) {
 											<div className="mb-6 flex flex-col">
 												<label
 													htmlFor="rate"
-													className="text-md font-medium mb-1"
+													className="text-md text-gray-900 font-medium mb-1"
 												>
 													How would you rate yourself on this?
 												</label>

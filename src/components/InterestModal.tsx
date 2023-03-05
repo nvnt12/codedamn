@@ -5,7 +5,11 @@ import Input from './PrimaryInput'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
 
-export default function InterestModal({ handleInterest }) {
+export default function InterestModal({
+	handleInterest
+}: {
+	handleInterest(interest: string): void
+}) {
 	const [isOpen, setIsOpen] = useState(false)
 	const [interest, setInterest] = useState<string>('')
 
@@ -46,12 +50,14 @@ export default function InterestModal({ handleInterest }) {
 								leaveFrom="opacity-100 scale-100"
 								leaveTo="opacity-0 scale-95"
 							>
-								<Dialog.Panel className="w-8/12 mx-auto max-w-3xl sm:w-full sm:px-2 md:w-10/12 md:px-6 sm:h-5/6 rounded-xl bg-white p-2 text-left align-middle shadow-xl transition-all">
-									<div className="flex items-start justify-center p-3 rounded-t">
-										<h3 className="text-xl font-semibold">Add Education</h3>
+								<Dialog.Panel className="w-8/12 mx-auto max-w-3xl sm:w-full sm:px-3 md:w-10/12 md:px-6 sm:h-5/6 rounded-xl bg-zinc-50 p-6 text-left align-middle shadow-xl transition-all">
+									<div className="flex items-start justify-start p-3 rounded-t">
+										<h3 className="text-2xl font-semibold ml-1">
+											Add Interest
+										</h3>
 									</div>
 
-									<div className="relative py-6 px-6 flex-auto">
+									<div className="relative py-2 px-4 flex-auto">
 										<form
 											className="w-full relative flex-auto"
 											onSubmit={e => {

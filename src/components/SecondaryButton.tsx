@@ -6,7 +6,7 @@ export default function SecondaryButton(props: {
 	return (
 		<button
 			type={props.type}
-			className="mx-2 bg-gray-100 py-2 px-5 text-gray-900 text-md rounded-lg font-medium"
+			className="mx-2 bg-gray-100 py-2 px-5 text-gray-900 text-md rounded-lg font-medium border hover:bg-gray-200"
 			onClick={props.onClick}
 		>
 			{props.value}

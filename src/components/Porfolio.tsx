@@ -142,7 +142,7 @@ export default function Portfolio(props: {
 								date: string
 							}) => (
 								<div
-									key={project.index}
+									key={project.title}
 									className="rounded-lg border-2 border-gray-100"
 								>
 									<Card
@@ -179,7 +179,7 @@ export default function Portfolio(props: {
 								date: string
 							}) => (
 								<div
-									key={playground.index}
+									key={playground.title}
 									className="rounded-lg border-2 border-gray-100"
 								>
 									<Card

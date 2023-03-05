@@ -11,7 +11,10 @@ import { TbEdit } from 'react-icons/tb'
 import PrimaryButton from '../components/PrimaryButton'
 import Portfolio from '../components/Porfolio'
 import Resume from '../components/Resume'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import useToken from '../components/useToken'
+import jsonwebtoken from 'jsonwebtoken'
 
 export const getStaticProps: GetStaticProps = async context => {
 	mongoose.connect(process.env.MONGODB_URI as string)
@@ -35,7 +38,8 @@ export const getStaticProps: GetStaticProps = async context => {
 		playgrounds: user?.playgrounds,
 		interests: user?.interests,
 		education: user?.education,
-		experience: user?.experience
+		experience: user?.experience,
+		cover: user?.cover
 	})
 	const props = JSON.parse(prop)
 
@@ -51,6 +55,7 @@ export default function Home(props: {
 	profession: string
 	location: string
 	institute: string
+	cover: string
 	skills: [
 		{
 			index: number
@@ -126,36 +131,94 @@ export default function Home(props: {
 	const instagram: string = props.instagram
 	const [portfolio, setPortfolio] = useState<boolean>(true)
 	const [resume, setResume] = useState<boolean>(false)
+	const [isLoggedIn, setLoggedIn] = useState<boolean>(false)
+	const [cover, setCover] = useState<string>(props.cover)
+	const [pfp, setPfp] = useState<string>('/pfp.jpeg')
+
+	const router = useRouter()
+
+	async function UploadCover(cover: string) {
+		const newCover: { cover: string } = {
+			cover
+		}
+		const res = await fetch('/api/updateUser', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify(newCover)
+		})
+	}
+
+	function CheckToken() {
+		const token = localStorage.getItem('token') as string
+		if (token) {
+			setLoggedIn(true)
+		}
+		const tokenBody = useToken(token)
+		setPfp(tokenBody.pfp)
+	}
+
+	useEffect(() => {
+		try {
+			CheckToken()
+		} catch {
+			//do something
+		}
+	}, [])
 
 	return (
 		<>
+			<Head>
+				<title>Profile page</title>
+			</Head>
 			<NavBar />
 			<div className="h-full w-full flex flex-col items-center sm:px-3 sm:w-full md:w-full md:px-6">
 				<div className="border-2 w-8/12 h-fit rounded-2xl border-gray-100 mt-12 sm:w-full sm:mt-6 md:w-full">
 					<div>
 						<div className="relative">
 							<Image
-								src={'/cover.jpg'}
+								src={cover}
 								alt={'Cover Image'}
 								width="1000"
 								height="80"
 								className="rounded-t-2xl w-full h-40"
 							/>
-							<div className="flex items-center absolute top-5 right-7 sm:right-5 w-fit">
-								<button
-									className="px-2 py-1.5 rounded-lg border border-white border-opacity-50 flex text-base items-center text-white font-semibold bg-white bg-opacity-20 sm:text-sm
-								"
-								>
-									<TbEdit className="h-6 w-6 mr-2 sm:h-5 sm:w-5" />
-									Edit cover
-								</button>
-							</div>
+							{isLoggedIn && (
+								<div className="flex items-center absolute top-5 right-7 sm:right-5 w-fit">
+									<label className="px-2 py-1.5 rounded-lg border border-white border-opacity-50 flex text-base sha items-center text-white font-semibold bg-gray-300 bg-opacity-50 sm:text-sm">
+										<input
+											type="file"
+											name="cover"
+											id="cover"
+											className="hidden"
+											onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+												const files: FileList | null = e.target.files
+												if (files && files.length > 0) {
+													const img: File | null = files[0] as File
+
+													const reader = new FileReader()
+													reader.readAsDataURL(img)
+
+													reader.addEventListener('load', () => {
+														const img = reader.result as string
+														UploadCover(img)
+														setCover(img)
+													})
+												}
+											}}
+										/>
+										<TbEdit className="h-6 w-6 mr-2 sm:h-5 sm:w-5" />
+										Edit cover
+									</label>
+								</div>
+							)}
 						</div>
 					</div>
 					<div className="relative flex p-5 sm:flex-wrap sm:px-2 md:flex-wrap md:p-4">
 						<div className="relative pl-2 -top-28 mt-2 sm:-top-40 sm:h-0 sm:pl-4 sm:mt-1 md:h-12">
 							<Image
-								src={'/pfp.jpeg'}
+								src={pfp}
 								alt={'Profile picture'}
 								width="200"
 								height="200"
@@ -199,7 +262,7 @@ export default function Home(props: {
 							</div>
 
 							<div className="flex justify-between pt-10 pb-4 border-t-2 border-gray-100 sm:pt-3 sm:pb-0 sm:flex-wrap items-center">
-								<div className="flex flex-wrap sm:mt-1 sm:pl-2">
+								<div className="flex sm:flex-wrap sm:mt-1 sm:pl-2">
 									{github && (
 										<Link legacyBehavior href={github}>
 											<a target="_blank" rel="noopener noreferrer">
@@ -226,7 +289,6 @@ export default function Home(props: {
 											</a>
 										</Link>
 									)}
-
 									{instagram && (
 										<Link legacyBehavior href="/">
 											<a target="_blank" rel="noopener noreferrer">
@@ -280,7 +342,7 @@ export default function Home(props: {
 										</Link>
 									)}
 								</div>
-								<div className="flex sm:mt-1">
+								<div className="flex sm:mt-1 sm:pl-2 sm:items-end">
 									<HiOutlineBookmark className="border-2 border-gray-100 rounded-lg w-10 h-10 p-2 mr-4 sm:mr-2" />
 									<PrimaryButton
 										value="Contact"

@@ -6,7 +6,6 @@ export default async function Database(req: NextApiRequest, res: NextApiResponse
 	mongoose.connect(process.env.MONGODB_URI as string)
 
 	const reqUser = req.body
-	console.log(reqUser)
 	const update = await Users.updateOne(
 		{ id: reqUser.id },
 		{
@@ -31,11 +30,16 @@ export default async function Database(req: NextApiRequest, res: NextApiResponse
 			playgrounds: reqUser.playgrounds,
 			projects: reqUser.projects,
 			education: reqUser.education,
-			experience: reqUser.experience
+			experience: reqUser.experience,
+			cover: reqUser.cover
 		}
 	)
 
 	if (update) {
+		res.revalidate('/edit_profile')
+		res.revalidate('/edit_socials')
+		res.revalidate('/edit_resume')
+		res.revalidate('/edit_portfolio')
 		res.status(200).send(update)
 	}
 }
